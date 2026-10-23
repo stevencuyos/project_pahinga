@@ -451,6 +451,7 @@
     .original-form-card .ca-e{background:#fce8e6;color:#c5221f;border-color:#ea4335}
     .original-form-card .ca-ok{background:#e6f4ea;color:#137333;border-color:#34a853}
     .original-form-card .ca-info{background:#e8f0fe;color:#185abc;border-color:#1a73e8}
+.original-form-card .ca-warn{background:var(--yellow-bg);color:var(--yellow-txt);border-color:var(--yellow-main)}
     .peer-row{display:flex;align-items:center;gap:8px;margin-top:10px}
     .peer-avatar-group{display:flex;align-items:center}
     .peer-avatar{width:24px;height:24px;border-radius:50%;border:2px solid white;background:var(--border-grid);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;color:var(--text-muted);text-transform:uppercase}
@@ -932,6 +933,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .sch-vb.a{background:var(--green-main);color:var(--bg-surface)}
 .sch-vb.p{background:var(--yellow-bg);color:var(--yellow-txt);border:1px dashed var(--yellow-main)}
 .sch-vb.x{background:var(--red-main);color:var(--bg-surface)}
+.sch-vb.d{background:var(--bg-cell-hover);color:var(--text-muted);border:1px dashed var(--text-muted)}
 .sch-c.vlx{outline:2px solid var(--red-main);outline-offset:-2px}
 .sch-leg{display:inline-flex;align-items:center;gap:6px;margin-left:12px;font:500 11px 'Google Sans',sans-serif;color:var(--text-muted)}
 .sch-leg .sch-vb{position:static;display:inline-block}
@@ -988,6 +990,9 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .sch-plan:hover{filter:brightness(1.1)}
 .sch-plan .material-symbols-rounded{font-size:18px}
 .pl-card{max-width:1000px;width:100%;max-height:92vh;display:flex;flex-direction:column}
+#planOv,#planOv .pl-card,#planOv .cm-ft,#planOv .cm-ft button{pointer-events:auto!important}
+#optOv,#optOv .pl-card,#optOv .cm-ft,#optOv .cm-ft button{pointer-events:auto!important}
+#planOv .cm-ft{position:relative;z-index:5}
 .pl-body{flex:1;overflow-y:auto;padding:18px 26px;min-height:200px}
 .pl-empty{padding:50px;text-align:center;color:var(--text-muted)}
 .pl-sum{font-size:13px;color:var(--text-muted);margin-bottom:12px;line-height:1.5}
@@ -1016,6 +1021,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .pl-tag{display:inline-block;font:800 9px 'Google Sans',sans-serif;padding:2px 7px;border-radius:8px;margin-right:6px;text-transform:uppercase}
 .pl-tag.vl{background:var(--green-bg);color:var(--green-txt)}
 .pl-tag.swap{background:var(--blue-bg);color:var(--blue-txt)}
+.pl-tag.shift{background:var(--purple-bg);color:var(--purple-txt)}
 .pl-note{font-size:12.5px;padding:8px 12px;border-radius:10px;margin-bottom:8px;line-height:1.5}
 .pl-note.warn{background:var(--yellow-bg);color:var(--yellow-txt)}
 .pl-note.bad{background:var(--red-bg);color:var(--red-txt)}
@@ -1224,6 +1230,12 @@ header{border-bottom:none}
 .legend-item:has(input[value="Personal"]) .legend-dot{--dot-color:var(--purple-main)!important}
 .legend-item:has(input[value="Family Gathering"]) .legend-dot{--dot-color:var(--green-main)!important}
 .legend-item:has(input[value="Emergency"]) .legend-dot{--dot-color:var(--red-main)!important}
+.legend-item:has(input[value="Mental Wellness"]) .legend-dot{--dot-color:var(--purple-main)!important}
+.legend-item:has(input[value="Birthday"]) .legend-dot{--dot-color:var(--pink-main)!important}
+.legend-item:has(input[value="Medical"]) .legend-dot{--dot-color:var(--red-main)!important}
+.legend-item:has(input[value="Bereavement"]) .legend-dot{--dot-color:var(--neutral-main)!important}
+.legend-item:has(input[value="Government / Legal"]) .legend-dot{--dot-color:var(--orange-main)!important}
+.legend-item:has(input[value="Moving House"]) .legend-dot{--dot-color:var(--blue-main)!important}
 
 /* ══ FORM POLISH ══ */
 
@@ -1388,7 +1400,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 #formModal .ca{border-radius:12px}
 
 /* ── VL type tiles ── */
-#formModal #rsGrp{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+#formModal #rsGrp{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
 #formModal #rsGrp .chip{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
   padding:16px 8px 14px;border-radius:18px;text-align:center;font:600 12.5px 'Google Sans',sans-serif;color:var(--text-main);
   background:var(--bg-surface);border:1.5px solid color-mix(in srgb,var(--border-light) 85%,transparent);box-shadow:none;
@@ -2023,9 +2035,15 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
         <label class="legend-item"><input type="checkbox" checked value="Personal" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--purple-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">person</span>Personal</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Family Gathering" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--green-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">home</span>Family</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Emergency" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--red-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">emergency</span>Emergency</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Mental Wellness" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--purple-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">self_improvement</span>Mental Wellness</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Birthday" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--pink-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">cake</span>Birthday</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Medical" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--red-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">medical_services</span>Medical</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Bereavement" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--neutral-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">favorite</span>Bereavement</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Government / Legal" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--orange-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">gavel</span>Gov / Legal</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Moving House" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--blue-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">local_shipping</span>Moving House</span></label>
       </div>
       <div class="filter-section">
-        <div class="filter-title">Sites</div>
+        <div class="filter-title" style="display:flex;justify-content:space-between;align-items:center;padding-right:12px">Sites<button type="button" class="btn-save-preset" onclick="siteAll('.st-filter',function(){saveSettings();renderCalendar()})">All</button></div>
         <div class="chip-group chip-grid"><label class="filter-chip"><input type="checkbox" checked value="CEB" class="st-filter">CEB</label><label class="filter-chip"><input type="checkbox" checked value="VNCC" class="st-filter">VNCC</label><label class="filter-chip"><input type="checkbox" checked value="UBT" class="st-filter">UBT</label><label class="filter-chip"><input type="checkbox" checked value="DAV" class="st-filter">DAV</label></div>
       </div>
       <div class="fb-panel-bottom">
@@ -2062,6 +2080,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
             <button type="button" data-m="me" onclick="msMode('me')"><span class="material-symbols-rounded">person</span>My 4 weeks</button>
           </div>
           <div class="msch-right" id="msSites">
+            <button type="button" class="sch-all" onclick="msSitesAll()">All</button>
             <button type="button" class="sch-all ms-site" data-s="CEB" onclick="msToggleSite(this)">CEB</button>
             <button type="button" class="sch-all ms-site" data-s="VNCC" onclick="msToggleSite(this)">VNCC</button>
             <button type="button" class="sch-all ms-site" data-s="UBT" onclick="msToggleSite(this)">UBT</button>
@@ -2184,7 +2203,6 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
         <div style="display:flex;gap:8px">
           <button class="ac-act-btn btn-appr" id="modalBtnAppr" style="flex:1;margin:0" onclick="doAdminAction('Approved',this,'modalComment')">Approve</button>
           <button class="ac-act-btn btn-deny" id="modalBtnDeny" style="flex:1;margin:0" onclick="doAdminAction('Denied',this,'modalComment')">Deny</button>
-          <button class="ac-act-btn btn-noal" id="modalBtnNoAl" style="flex:1;margin:0" onclick="doAdminAction('No Allocation',this,'modalComment')">No Alloc</button>
         </div>
       </div>
     </div>
@@ -2229,6 +2247,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
       <label class="ac-wg-chip" title="Filed less than 7 days before the start date (emergencies excluded)"><input type="checkbox" id="acShort" onchange="renderAdminQueue(true)">Short notice</label>
       <label class="ac-wg-chip" title="Starting within the next 7 days, or already started"><input type="checkbox" id="acSoon" onchange="renderAdminQueue(true)">Next 7 days</label>
       <div class="ac-wg-chips" id="acSiteChips">
+        <button type="button" class="sch-all" onclick="siteAll('.ac-site-filter',renderAdminQueue)">All</button>
         <label class="ac-wg-chip"><input type="checkbox" value="CEB" class="ac-site-filter" checked onchange="renderAdminQueue(true)">CEB</label>
         <label class="ac-wg-chip"><input type="checkbox" value="VNCC" class="ac-site-filter" checked onchange="renderAdminQueue(true)">VNCC</label>
         <label class="ac-wg-chip"><input type="checkbox" value="UBT" class="ac-site-filter" checked onchange="renderAdminQueue(true)">UBT</label>
@@ -2253,7 +2272,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
             <div class="sch-search"><span class="material-symbols-rounded">search</span><input id="schQ" type="text" placeholder="Search support…" oninput="renderSchedules()" autocomplete="off" spellcheck="false"></div>
             <div class="sch-pend" id="schPend" style="display:none"><span class="sch-dot"></span><span id="schPendTxt"></span><button class="sch-link" id="schUndoBtn" onclick="schUndo()" title="Undo (Ctrl+Z)">Undo</button><button class="sch-link" onclick="schDiscard()">Discard</button><button class="sch-btn sch-save" id="schSaveBtn" onclick="schSave()" title="Ctrl+S">Save to sheet</button></div>
           </div>
-          <div class="ac-wg-chips sch-sites"><button type="button" class="sch-plan" onclick="openPlanner()" title="Roll this week's shifts and rest days forward two weeks"><span class="material-symbols-rounded">auto_fix_high</span>Plan next 2 weeks</button><button type="button" class="sch-minbtn" id="schSyncBtn" onclick="schSyncVL()" title="Write every approved VL (today onward) into the schedule"><span class="material-symbols-rounded">event_busy</span>Sync approved VL</button><span class="sch-sep"></span><div class="sch-lay" id="schLay"><button type="button" data-m="grid" onclick="schLayout('grid')"><span class="material-symbols-rounded">table_rows</span>Schedule</button><button type="button" data-m="heat" onclick="schLayout('heat')"><span class="material-symbols-rounded">grid_on</span>Coverage</button><button type="button" data-m="split" onclick="schLayout('split')"><span class="material-symbols-rounded">view_column</span>Split</button></div><span class="sch-sep"></span><button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,'sched')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt">Set minimums</span></button><button class="sch-ib" onclick="schExport()" title="Export week as CSV"><span class="material-symbols-rounded">download</span></button><button class="sch-ib" onclick="schHelp(true)" title="Keyboard shortcuts (?)"><span class="material-symbols-rounded">keyboard</span></button><span class="sch-sep"></span><button class="sch-all" onclick="schSitesAll()">All</button>
+          <div class="ac-wg-chips sch-sites"><button type="button" class="sch-plan" onclick="openOptimizer()" title="Fill every hour below the site minimum for this week"><span class="material-symbols-rounded">tune</span>Optimize</button><button type="button" class="sch-plan" onclick="openPlanner()" title="Roll this week's shifts and rest days forward two weeks"><span class="material-symbols-rounded">auto_fix_high</span>Plan next 2 weeks</button><button type="button" class="sch-minbtn" id="schSyncBtn" onclick="schSyncVL()" title="Write every approved VL (today onward) into the schedule"><span class="material-symbols-rounded">event_busy</span>Sync approved VL</button><span class="sch-sep"></span><div class="sch-lay" id="schLay"><button type="button" data-m="grid" onclick="schLayout('grid')"><span class="material-symbols-rounded">table_rows</span>Schedule</button><button type="button" data-m="heat" onclick="schLayout('heat')"><span class="material-symbols-rounded">grid_on</span>Coverage</button><button type="button" data-m="split" onclick="schLayout('split')"><span class="material-symbols-rounded">view_column</span>Split</button></div><span class="sch-sep"></span><button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,'sched')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt">Set minimums</span></button><button class="sch-ib" onclick="schExport()" title="Export week as CSV"><span class="material-symbols-rounded">download</span></button><button class="sch-ib" onclick="schHelp(true)" title="Keyboard shortcuts (?)"><span class="material-symbols-rounded">keyboard</span></button><span class="sch-sep"></span><button class="sch-all" onclick="schSitesAll()">All</button>
             <label class="ac-wg-chip"><input type="checkbox" value="CEB" class="sch-site-chk" checked onchange="schPickSite(this)">CEB</label>
             <label class="ac-wg-chip"><input type="checkbox" value="VNCC" class="sch-site-chk" checked onchange="schPickSite(this)">VNCC</label>
             <label class="ac-wg-chip"><input type="checkbox" value="UBT" class="sch-site-chk" checked onchange="schPickSite(this)">UBT</label>
@@ -2281,6 +2300,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
             <option value="last30">Last 30 days</option>
           </select>
           <div class="ac-wg-chips sch-sites">
+            <button type="button" class="sch-all" onclick="siteAll('.ins-site-chk',renderInsights)">All</button>
             <label class="ac-wg-chip"><input type="checkbox" value="CEB" class="ins-site-chk" checked onchange="renderInsights()">CEB</label>
             <label class="ac-wg-chip"><input type="checkbox" value="VNCC" class="ins-site-chk" checked onchange="renderInsights()">VNCC</label>
             <label class="ac-wg-chip"><input type="checkbox" value="UBT" class="ins-site-chk" checked onchange="renderInsights()">UBT</label>
@@ -2335,11 +2355,19 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
   </div>
 </div>
 
-<div class="ov" id="planOv" style="z-index:3500">
+<div class="ov" id="planOv" style="z-index:3500" onclick="if(event.target===this)closePlanner()">
   <div class="cm pl-card">
     <div class="cm-head"><div class="cm-hr"><div class="cm-ico"><span class="material-symbols-rounded" style="font-size:24px;color:var(--blue-main)">auto_fix_high</span></div><div><div class="cm-ttl" style="color:var(--text-title)">Plan next 2 weeks</div></div></div></div>
     <div class="pl-body" id="planBody"></div>
-    <div class="cm-ft"><button class="btn-ed" onclick="closePlanner()">Close</button><button class="btn-go" id="planApplyBtn" onclick="planApply()" disabled><span id="planApplyTxt" style="position:relative">Add to editor</span></button></div>
+    <div class="cm-ft"><button type="button" class="btn-ed" id="planCloseBtn" onclick="event.stopPropagation();closePlanner()">Close</button><button class="btn-go" id="planApplyBtn" onclick="planApply()" disabled><span id="planApplyTxt" style="position:relative">Add to editor</span></button></div>
+  </div>
+</div>
+
+<div class="ov" id="optOv" style="z-index:3500" onclick="if(event.target===this)closeOptimizer()">
+  <div class="cm pl-card">
+    <div class="cm-head"><div class="cm-hr"><div class="cm-ico"><span class="material-symbols-rounded" style="font-size:24px;color:var(--blue-main)">tune</span></div><div><div class="cm-ttl" style="color:var(--text-title)">Optimize coverage</div></div></div></div>
+    <div class="pl-body" id="optBody"></div>
+    <div class="cm-ft"><button type="button" class="btn-ed" onclick="event.stopPropagation();closeOptimizer()">Close</button><button class="btn-go" id="optApplyBtn" onclick="optApply()" disabled><span id="optApplyTxt">Nothing to apply</span></button></div>
   </div>
 </div>
 
@@ -2403,6 +2431,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
             </div>
             <div class="ca ca-ok" id="dateOk"></div>
             <div class="ca ca-info" id="peerBlock"><div id="peerWrap" class="peer-row"></div></div>
+            <div class="ca ca-warn" id="offWarn"></div>
           </div>
         </section>
 
@@ -2416,6 +2445,12 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
                 <div class="chip" data-val="Personal" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">person</span>Personal</div>
                 <div class="chip" data-val="Family Gathering" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">home</span>Family Gathering</div>
                 <div class="chip" data-val="Emergency" onclick="pickChip(this,'rsGrp','red','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','red','rsVal')"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">emergency</span>Emergency</div>
+                <div class="chip" data-val="Mental Wellness" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">self_improvement</span>Mental Wellness</div>
+                <div class="chip" data-val="Birthday" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">cake</span>Birthday</div>
+                <div class="chip" data-val="Medical" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">medical_services</span>Medical</div>
+                <div class="chip" data-val="Bereavement" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">favorite</span>Bereavement</div>
+                <div class="chip" data-val="Government / Legal" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">gavel</span>Government / Legal</div>
+                <div class="chip" data-val="Moving House" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">local_shipping</span>Moving House</div>
               </div>
               <input type="hidden" id="rsVal">
               <div class="field-err-tip" id="errChip-rsGrp">Please select a VL type.</div>
@@ -2451,13 +2486,23 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
           <div class="pf-body">
             <div class="two">
               <div class="f">
+                <label>VL accruals <span class="req">*</span> <span class="opt" id="crSrcTag"></span></label>
+                <input type="number" id="crAcc" min="0" max="999" step="0.01" placeholder="e.g. 12.5" oninput="saveDraft()" style="margin-bottom:12px">
                 <label>VL credits snip <span class="req">*</span></label>
                 <input type="url" id="vlCredits" placeholder="https://drive.google.com/…" oninput="saveDraft()">
                 <div style="font-size:11.5px;color:var(--text-muted);margin-top:6px">Must show the date the snip was taken.</div>
               </div>
               <div class="f">
-                <label>Email subject of your BCP <span class="req">*</span></label>
-                <input type="text" id="vlBcp" placeholder="Subject line of your BCP email" oninput="saveDraft()">
+                <label>BCP handoff notes / tasks to cover <span class="opt">goes into your BCP email</span></label>
+                <textarea id="vlBcpNotes" class="fb-textarea" style="min-height:68px;height:68px;margin-bottom:10px" placeholder="List pending tickets, trackers, or tasks your coverage will handle…"></textarea>
+                <div id="bcpAutoBox" style="display:none;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;background:var(--blue-bg);color:var(--blue-txt);font-size:12px;line-height:1.5">
+                  <span class="material-symbols-rounded" style="font-size:18px">mail</span>
+                  <span>After you submit, tap <b>Copy formatted email &amp; open Gmail</b>. It opens in <b>your own Gmail</b>, addressed to your site peers with the Ops Managers on CC. Paste (Ctrl+V) into the body, attach anything you need, then press Send.</span>
+                </div>
+                <div id="bcpManualBox">
+                  <label>Email subject of your BCP <span class="req">*</span></label>
+                  <input type="text" id="vlBcp" placeholder="Paste the subject of the BCP email you sent…" oninput="saveDraft()">
+                </div>
               </div>
             </div>
             <div class="decl-box" style="margin-top:16px"><p class="decl-text">I hereby declare that the information given in this application is true and correct.</p><div class="decl-row"><input type="checkbox" id="declChk" onchange="toggleSub()"><label for="declChk">I agree</label></div></div>
@@ -2476,7 +2521,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
 </div>
 
 <div class="ov" id="cnfOv"><div class="cm"><div class="cm-head"><div class="cm-ttl">Review Application</div></div><div class="cm-rows" id="cnfRows"></div><div class="cm-ft"><button class="btn-ed" onclick="closeConfirm()">← Edit</button><button class="btn-go" id="cnfBtn" onclick="submitForm()"><span class="lock-fill"></span><span id="cnfTxt" style="position:relative">Confirm &amp; Submit</span><div class="spn" id="cnfSpn" style="border-color:rgba(255,255,255,.4);border-top-color:white"></div></button></div></div></div>
-<div class="ov" id="sucOv"><div class="sm"><div class="sm-ring"><span class="material-symbols-rounded" style="font-size:48px;color:#34a853">check_circle</span></div><div class="sm-ttl" id="sucTitle">Submitted!</div><div class="sm-txt" id="sucTxt">Your request has been logged.</div><div class="sm-det" id="sucDet"></div><p class="sm-email" id="sucEmail"></p><button class="btn-new" onclick="resetAndCloseAll()">Back to Dashboard</button></div></div>
+<div class="ov" id="sucOv"><div class="sm"><div class="sm-ring"><span class="material-symbols-rounded" style="font-size:48px;color:#34a853">check_circle</span></div><div class="sm-ttl" id="sucTitle">Submitted!</div><div class="sm-txt" id="sucTxt">Your request has been logged.</div><div class="sm-det" id="sucDet"></div><p class="sm-email" id="sucEmail"></p><button type="button" id="sucBcp" class="btn-new" style="display:none;margin-bottom:8px;align-items:center;justify-content:center;gap:8px" onclick="bcpSuccessOpen()"><span class="material-symbols-rounded" style="font-size:18px">mail</span><span id="sucBcpTxt">Open BCP email in Gmail</span></button><button class="btn-new" onclick="resetAndCloseAll()">Back to Dashboard</button></div></div>
 
 <div class="ov" id="helpOv" onclick="if(event.target===this)closeHelp()">
   <div class="cm hp-card" role="dialog" aria-label="Help and guide">
@@ -2521,7 +2566,7 @@ let poOvTimer=null;
 // QoL #1: LDAP dropdown keyboard nav state
 let _ldapFocusIdx=-1;
 
-const reasonIcons={"Out of Town / Vacation":"flight","Personal":"person","Family Gathering":"home","Emergency":"emergency"};
+const reasonIcons={"Out of Town / Vacation":"flight","Personal":"person","Family Gathering":"home","Emergency":"emergency","Mental Wellness":"self_improvement","Birthday":"cake","Medical":"medical_services","Bereavement":"favorite","Government / Legal":"gavel","Moving House":"local_shipping"};
 
 const HOLIDAYS_2026 = {
   "2026-01-01": "New Year's Day",
@@ -2820,7 +2865,7 @@ const _THEME_FAMILIES = [
   {id:'warm',     label:'Warm Neutral',    icon:'wb_sunny',       dark:'warm-dark',     light:'warm-light',     group:'Premium'},
   {id:'classic',  label:'Classic',         icon:'calendar_month', dark:'dark',          light:'default',        group:'Classic'},
 ];
-let _currentThemeId = 'graphite-dark';
+let _currentThemeId = 'default';
 
 const _THEME_PALETTES = {
     default:  ['#005ac1','#006d31','#ba1a1a','#825500'],
@@ -2856,7 +2901,14 @@ function loadTheme() {
   if (!saved) {
     try { if (localStorage.getItem('vl_darkMode') === '1') saved = 'dark'; } catch(e) {}
   }
-  applyTheme(saved || 'graphite-dark');
+  var DEFAULT_THEME = 'default', THEME_RESET = 'v2';
+  try {
+    if (localStorage.getItem('vl_theme_reset') !== THEME_RESET) {
+      saved = null;
+      localStorage.setItem('vl_theme_reset', THEME_RESET);
+    }
+  } catch(e) {}
+  applyTheme(saved || DEFAULT_THEME);
 }
 
 const _presetsKey = 'vl_filter_presets';
@@ -3292,6 +3344,159 @@ function quickAdminAction(uuid,status,btn){
     })
     .updateRequestStatus(uuid, ev.status, status, '');
 }
+function _getSelectedCoverageLdaps(){
+  var picked=[];
+  var roster=Array.isArray(window.roster)?window.roster:[];
+  document.querySelectorAll('#covChips .cov-card').forEach(function(card){
+    var sub=card.querySelector('.cov-sub');
+    var raw=(sub?sub.textContent:card.textContent)||'';
+    var tokens=raw.toLowerCase().split(/[^a-z0-9._-]+/).filter(Boolean);
+    var hit=roster.find(function(r){return tokens.indexOf((r.ldap||'').toLowerCase())>=0});
+    if(hit&&picked.indexOf(hit.ldap)<0)picked.push(hit.ldap);
+    else if(tokens[0]&&picked.indexOf(tokens[0])<0)picked.push(tokens[0]);
+  });
+  return picked;
+}
+
+/* ===== BCP EMAIL: opens a pre-filled compose window in the user's own Gmail ===== */
+var BCP_AUTO_COMPOSE=false;   // keep in sync with BCP_AUTO_COMPOSE in Code.gs
+var _bcpLast=null,_bcpViewEv=null,_bcpViewKind='new';
+function _bcpBody(p,f){
+  var n=dayCount(f.startDate,f.endDate),rng=_fmtRange(f.startDate,f.endDate)+(n>1?' ('+n+' days)':'');
+  var intro={
+    'new':'Hi team,\n\nI will be on leave on the dates below. Please see my coverage and handoff details.',
+    'update':'Hi team,\n\nUPDATE: my leave dates changed. Please disregard my earlier BCP and use the details below.',
+    'cancel':'Hi team,\n\nMy leave has been cancelled / not approved. Please disregard my earlier BCP. No coverage is needed.'
+  }[f.kind]||'';
+  var L=[intro,'','Name: '+p.nick+' ('+p.ldap+')','Site / role: '+p.site+' · '+p.role,'Leave dates: '+rng,'VL type: '+(f.vlType||'—')];
+  if(f.kind!=='cancel'){L.push('Assigned coverage: '+(p.cov||'—'));L.push('Handoff / tasks: '+((f.notes||'').trim()||'Standard queue & support coverage'))}
+  if(f.docsUrl)L.push('Supporting docs: '+f.docsUrl);
+  if(p.appUrl)L.push('','Filed in Project Pahinga: '+p.appUrl);
+  L.push('','Thanks,',p.nick);
+  return L.join('\n');
+}
+function bcpGmailUrl(p,f,noBody){
+  var f2={};for(var k in f)f2[k]=f[k];
+  function mk(){
+    return 'https://mail.google.com/mail/?authuser='+encodeURIComponent(p.email)+'&view=cm&fs=1'+
+      '&to='+encodeURIComponent(p.to.join(','))+(p.cc.length?'&cc='+encodeURIComponent(p.cc.join(',')):'')+
+      '&su='+encodeURIComponent(p.subject)+(noBody?'':'&body='+encodeURIComponent(_bcpBody(p,f2)));
+  }
+  var u=mk();
+  while(u.length>7500&&(f2.notes||'').length>20){f2.notes=f2.notes.slice(0,Math.floor(f2.notes.length/2))+'… (full notes in Project Pahinga)';u=mk()}
+  return u;
+}
+function _bcpMark(uuid,f){
+  try{google.script.run.markBcpOpened(uuid,f.kind==='cancel'?'CANCELLED':f.startDate+'|'+f.endDate)}catch(e){}
+}
+function _bcpHtml(p,f){
+  var n=dayCount(f.startDate,f.endDate),rng=_fmtRange(f.startDate,f.endDate),e=_escHtml;
+  var cancel=f.kind==='cancel';
+  var C={'new':['#1a73e8','#e8f0fe','BCP · Leave coverage'],'update':['#b06000','#fef7e0','BCP update · Dates changed'],'cancel':['#c5221f','#fce8e6','BCP cancelled']}[f.kind]||['#1a73e8','#e8f0fe','BCP · Leave coverage'];
+  var F="font-family:'Google Sans',Roboto,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;";
+  var intro={
+    'new':'I’ll be on leave on the dates below. Here is my coverage and handoff.',
+    'update':'My leave dates changed. Please disregard my earlier BCP and use the details below.',
+    'cancel':'My leave was cancelled or not approved. Please disregard my earlier BCP. No coverage is needed.'
+  }[f.kind]||'';
+  function row(l,v){
+    var td=F+'padding:14px 0;border-top:1px solid #e8eaed;vertical-align:top;';
+    return '<tr><td style="'+td+'width:130px;font-size:11px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;color:#80868b">'+l+'</td><td style="'+td+'font-size:14px;line-height:1.55;color:#202124">'+v+'</td></tr>';
+  }
+  var rows=row('Leave dates',e(rng)+(n>1?' &nbsp;<span style="color:#80868b">('+n+' days)</span>':''))+row('Type',e(f.vlType||'—'));
+  if(!cancel){
+    var chips=(p.cov||'').split(/,\s*/).filter(Boolean).map(function(c){
+      return '<span style="display:inline-block;margin:0 6px 6px 0;padding:5px 12px;border-radius:999px;background:#f1f3f4;font-size:13px;font-weight:500;color:#202124">'+e(c)+'</span>';
+    }).join('')||'—';
+    rows+=row('Coverage',chips);
+    rows+=row('Handoff',(f.notes||'').trim()?e(f.notes.trim()).replace(/\n/g,'<br>'):'<span style="color:#80868b">Standard queue &amp; support coverage</span>');
+  }
+  if(f.docsUrl&&/^https?:\/\//i.test(f.docsUrl))rows+=row('Documents','<a href="'+e(f.docsUrl)+'" style="color:#1a73e8;text-decoration:none;font-weight:600">View supporting doc ↗</a>');
+  var cta=p.appUrl?'<div style="margin:26px 0 6px"><a href="'+e(p.appUrl)+'" style="display:inline-block;padding:12px 26px;border-radius:980px;background:#1d1d1f;color:#ffffff;text-decoration:none;font-size:14px;font-weight:600">Open in Project Pahinga</a></div>':'';
+  return '<div style="'+F+'max-width:560px;color:#202124">'+
+    '<div style="padding:0 0 18px"><span style="display:inline-block;padding:5px 12px;border-radius:999px;background:'+C[1]+';color:'+C[0]+';font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase">'+C[2]+'</span></div>'+
+    '<div style="font-size:30px;line-height:1.15;font-weight:600;letter-spacing:-.5px;'+(cancel?'text-decoration:line-through;color:#80868b':'color:#202124')+'">'+e(rng)+'</div>'+
+    '<div style="font-size:15px;color:#5f6368;margin:8px 0 20px">'+e(p.nick)+' · '+e(p.site)+' · '+e(p.role)+'</div>'+
+    '<div style="font-size:14px;line-height:1.6;color:#3c4043;margin-bottom:22px">'+intro+'</div>'+
+    '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;border-collapse:collapse">'+rows+'<tr><td colspan="2" style="border-top:1px solid #e8eaed;font-size:0;line-height:0">&nbsp;</td></tr></table>'+
+    cta+
+    '<div style="font-size:12px;color:#80868b;margin-top:18px">'+e(p.nick)+' ('+e(p.ldap)+') · filed via Project Pahinga</div>'+
+  '</div>';
+}
+function _bcpCopyRich(html){
+  try{
+    var d=document.createElement('div');d.contentEditable='true';
+    d.style.cssText='position:fixed;left:-9999px;top:0;opacity:0';d.innerHTML=html;document.body.appendChild(d);
+    var r=document.createRange();r.selectNodeContents(d);
+    var s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    var ok=document.execCommand('copy');
+    s.removeAllRanges();document.body.removeChild(d);
+    return ok;
+  }catch(e){return false}
+}
+function bcpOpen(p,f,uuid){
+  var copied=_bcpCopyRich(_bcpHtml(p,f));
+  var w=null;
+  try{w=window.open(bcpGmailUrl(p,f,copied),'_blank')}catch(e){}
+  if(w){
+    _bcpMark(uuid,f);
+    showToast(copied?'Formatted email copied. Click the email body in Gmail and press Ctrl+V (Cmd+V on Mac).':'Gmail opened with a plain-text version.','success',8000);
+  }
+  return !!w;
+}
+function bcpSuccessOpen(){
+  if(!_bcpLast)return;
+  if(!bcpOpen(_bcpLast.p,_bcpLast.f,_bcpLast.uuid))showToast('Your browser blocked the Gmail window. Allow pop-ups for this page and try again.','warn');
+}
+function bcpViewLine(e){
+  var out='';
+  var me=currentUserEmail&&e.email&&e.email.toLowerCase()===currentUserEmail.toLowerCase();
+  var sd=e.startDate||e.date,ed=e.endDate||sd;
+  _bcpViewEv=null;
+  if(e.bcpSubject)out+='<span style="font-weight:400;color:var(--text-muted)">BCP: '+_escHtml(e.bcpSubject)+'</span>';
+  if(!BCP_AUTO_COMPOSE)return out;
+  if(!me||ed<todayYmd())return out;
+  var denied=/denied|no.?alloc/i.test(e.status||''),kind=null,label='';
+  if(denied){if(e.bcpSentFor&&e.bcpSentFor!=='CANCELLED'){kind='cancel';label='Send BCP cancellation'}}
+  else if(!e.bcpSentFor){kind='new';label='Open BCP email in Gmail'}
+  else if(e.bcpSentFor!==sd+'|'+ed){kind='update';label='Send BCP update (dates changed)'}
+  else out+='<br><span style="font-weight:600;color:var(--green-txt)">✓ BCP opened for these dates</span>';
+  if(kind){
+    _bcpViewEv=e;_bcpViewKind=kind;
+    out+='<br><a href="#" onclick="bcpFromView();return false" style="color:var(--blue-main);font-weight:600;text-decoration:none">✉ '+label+'</a>';
+  }
+  return out;
+}
+function bcpFromView(){
+  var e=_bcpViewEv,kind=_bcpViewKind;if(!e)return;
+  var w=window.open('about:blank','_blank');
+  var sd=e.startDate||e.date,ed=e.endDate||sd;
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res||!res.success){if(w)w.close();showToast((res&&res.message)||'Could not prepare the BCP email.','error');return}
+      var f={kind:kind,startDate:sd,endDate:ed,vlType:e.vlType,docsUrl:e.docsUrl,notes:e.bcpNotes||''};
+      if(w){
+        var copied=_bcpCopyRich(_bcpHtml(res.plan,f));
+        w.location.href=bcpGmailUrl(res.plan,f,copied);_bcpMark(e.id,f);
+        showToast(copied?'Formatted email copied. Click the email body in Gmail and press Ctrl+V (Cmd+V on Mac).':'Gmail opened with a plain-text version.','success',8000);
+      }
+      else showToast('Your browser blocked the Gmail window. Allow pop-ups and try again.','warn');
+    })
+    .withFailureHandler(function(err){if(w)w.close();showToast('Error: '+(err&&err.message?err.message:'Failed'),'error')})
+    .getBcpPlan({kind:kind,startDate:sd,endDate:ed,coverage:(e.coverage||'').split(/[\s,]+/).filter(Boolean)});
+}
+window.addEventListener('load',function(){
+  var n=document.getElementById('vlBcpNotes');
+  if(n){
+    n.addEventListener('input',function(){saveDraft()});
+    n.style.display=BCP_AUTO_COMPOSE?'':'none';
+    if(n.previousElementSibling&&n.previousElementSibling.tagName==='LABEL')n.previousElementSibling.style.display=BCP_AUTO_COMPOSE?'':'none';
+  }
+  var a=document.getElementById('bcpAutoBox'),m=document.getElementById('bcpManualBox');
+  if(a)a.style.display=BCP_AUTO_COMPOSE?'flex':'none';
+  if(m)m.style.display=BCP_AUTO_COMPOSE?'none':'block';
+});
+
 function closeFeedbackModal(){document.getElementById('fbOv').classList.remove('on')}
 
 function sendFeedback(){
@@ -3458,6 +3663,7 @@ function _switchAcTabCore(mode){
     tabReq.classList.add('active'); tabIns.classList.remove('active');
     vReq.style.display='block'; vIns.classList.remove('on');
     fBar.style.display='block';
+    _st={};_imp.at=0;_imp.res={};
     renderAdminQueue(); // Populate dropdowns when opening/switching to queue
   }
 }
@@ -3466,7 +3672,7 @@ function _switchAcTabCore(mode){
 var _st={},_calKey='',_calStarts=null,_insTok=0;
 function loadStarts(s,e,cb){
   var key=s+'|'+e,hit=_st[key];
-  if(hit&&Date.now()-hit.t<120000){cb(hit.res);return}
+  if(hit&&Date.now()-hit.t<30000){cb(hit.res);return}
   if(!(window.google&&google.script)){cb(null,'Available in the deployed app only.');return}
   google.script.run
     .withSuccessHandler(function(res){
@@ -3768,8 +3974,8 @@ function _schCell(p,y,has,vl,dl){
   if(f){
     var x=(f==='a'&&/^\d\d:\d\d$/.test(v)&&y>=todayYmd());
     if(x)cls+=' vlx';
-    badge='<i class="sch-vb '+(x?'x':f)+'">'+(x?'!':'VL')+'</i>';
-    tip+=' · VL '+(f==='a'?'approved':'pending')+(x?' — but still scheduled to work':'');
+    badge='<i class="sch-vb '+(x?'x':f)+'">'+(x?'!':(f==='d'?'DN':'VL'))+'</i>';
+    tip+=' · VL '+(f==='a'?'approved':(f==='d'?'denied':'pending'))+(x?' — but still scheduled to work':'');
   }
   return '<td class="'+cls+'" data-r="'+p.row+'" data-y="'+y+'" onclick="schEdit(this,'+p.row+',\''+y+'\')" title="'+tip+'">'+badge+txt+(dl?'<span class="sch-dd">'+dl+'</span>':'')+'</td>';
 }
@@ -3891,12 +4097,14 @@ function skPlan(){
   return s+'</div>';
 }
 
-function schVlMap(){
+function schVlMap(denied){
   var m={};
   serverEvents.forEach(function(e){
-    var k=getStatProps(e.status).key;if(k==='rejected')return;
+    var k=getStatProps(e.status).key;
+    if(k==='rejected'&&!denied)return;
     var id=(e.ldap||'').toLowerCase()+'|'+e.date;
-    if(m[id]!=='a')m[id]=(k==='approved')?'a':'p';
+    var f=(k==='approved')?'a':(k==='pending'?'p':'d');
+    if(f==='a'||!m[id]||(f==='p'&&m[id]==='d'))m[id]=f;
   });
   return m;
 }
@@ -3935,7 +4143,7 @@ function renderSchedules(){
     lay.style.display=_sch.focus?'none':'inline-flex';
     lay.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-m')===_sch.layout)});
   }
-  var vl=schVlMap();
+  var vl=schVlMap(true);
   if(_sch.focus){renderSchFocus(d,body,vl,sc);return}
 
   var sites=Array.from(document.querySelectorAll('.sch-site-chk:checked')).map(function(c){return c.value});
@@ -4134,6 +4342,7 @@ function schRenderEditor(){
     '<div class="sch-ed-l">Shift start</div><input type="time" id="schEdTime" class="sch-time" value="'+(isTime?s.val:'')+'" oninput="schEdTime(this.value)" onkeydown="if(event.key===\'Enter\')schEdApply()">'+
     '<div class="sch-ed-l">Or set status</div><div class="sch-chips">'+chips+'</div>'+
     '<div class="sch-ed-l">Apply to</div><div class="sch-chips">'+days+'</div>'+
+    '<div class="sch-ed-l">Repeat on the same days</div><select class="sch-sel" style="width:100%" onchange="_sch.ed.rep=this.value">'+[[0,'This week only'],[1,'Also next week'],[2,'Also next 2 weeks'],[3,'Also next 3 weeks'],[4,'Also next 4 weeks'],[8,'Also next 8 weeks']].map(function(o){return '<option value="'+o[0]+'"'+(String(s.rep||0)===String(o[0])?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select>'+
     '<div class="sch-ed-f"><button type="button" class="sch-btn" onclick="schCloseEditor()">Cancel</button><button type="button" class="sch-btn sch-save" onclick="schEdApply()">Apply</button></div>';
 }
 function schEdSet(v){if(!_sch.ed)return;_sch.ed.val=v;schRenderEditor()}
@@ -4162,6 +4371,8 @@ function schEdApply(){
   var s=_sch.ed;if(!s)return;
   var ys=Object.keys(s.days);
   if(!ys.length)return;
+  var _rep=parseInt(s.rep,10)||0;
+  if(_rep)setTimeout(function(){schRepeat(s.p,ys,s.val,_rep)},0);
   schPush();
   ys.forEach(function(y){
     var p=s.p,k=p.row+'|'+y,orig=p.cells[y]||'';
@@ -4169,6 +4380,32 @@ function schEdApply(){
     else _sch.pending[k]={row:p.row,email:p.email,ymd:y,value:s.val,old:orig};
   });
   schCloseEditor();schUpdatePend();renderSchedules();
+}
+function schRepeat(p,ys,val,n){
+  if(!(window.google&&google.script))return;
+  var extra=[];
+  ys.forEach(function(y){for(var k=1;k<=n;k++)extra.push(insAdd(y,7*k))});
+  extra.sort();
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res||!res.success){showToast((res&&res.message)||'Could not read the later weeks.','error');return}
+      var pc=res.people.find(function(x){return x.row===p.row});
+      if(!pc){showToast('Support not found in the later weeks.','warn');return}
+      schPush();
+      var done=0,noCol=0,kept=0;
+      extra.forEach(function(y){
+        if(!res.hasData[y]){noCol++;return}
+        var orig=pc.cells[y]||'';
+        if(orig==='VL'||orig==='LOA'){kept++;return}
+        var k=p.row+'|'+y;
+        if(val===orig)delete _sch.pending[k];
+        else{_sch.pending[k]={row:p.row,email:p.email,ymd:y,value:val,old:orig};done++}
+      });
+      schUpdatePend();renderSchedules();
+      showToast('Repeated on '+done+' later day'+(done===1?'':'s')+(noCol?' · '+noCol+' skipped (no schedule column yet)':'')+(kept?' · '+kept+' skipped (VL/LOA)':'')+'. Review, then Save to sheet.',done?'success':'warn',6000);
+    })
+    .withFailureHandler(function(err){showToast('Repeat failed: '+err.message,'error')})
+    .getScheduleData(extra[0],extra[extra.length-1]);
 }
 function schCloseEditor(){
   _sch.ed=null;
@@ -4223,14 +4460,20 @@ window.addEventListener('beforeunload',function(e){
 });
 
 /* ── PLANNER: roll shifts + rest days forward 2 weeks ── */
-var PL_MAX_RUN=6;   // max consecutive working days a swap may create
-var _plan={data:null,t0:'',res:null,o:{vl:true,bal:true,rest2:true,fair:true}};
+var PL_MAX_RUN=6;var PL_MAX_SHIFT=3;var PL_MIN_REST=480;   // max consecutive working days a swap may create
+var _plan={data:null,t0:'',res:null,o:{vl:true,bal:true,rest2:true,fair:true,shift:true,zero:true}};
 
 function schBand(v){
   var h=parseInt(v.slice(0,2),10);
   return (h>=22||h<5)?'bn':h<10?'bm':h<16?'bd':'be';
 }
-function closePlanner(){document.getElementById('planOv').classList.remove('on')}
+function closePlanner(){
+  var m=document.getElementById('schMinMenu');if(m)m.style.display='none';
+  var o=document.getElementById('planOv');
+  o.classList.remove('on');
+  o.style.display='none';
+  setTimeout(function(){o.style.display=''},0);
+}
 function openPlanner(){
   if(!(window.google&&google.script)){showToast('The planner works only in the deployed app.','warn');return}
   var body=document.getElementById('planBody'),t0=_sch.start;
@@ -4240,6 +4483,7 @@ function openPlanner(){
   google.script.run
     .withSuccessHandler(function(res){
       if(!res||!res.success){body.innerHTML='<div class="pl-empty" style="color:var(--red-main)">'+_escHtml((res&&res.message)||'Could not load the schedule.')+'</div>';return}
+      res.people.forEach(function(p){Object.keys(_sch.pending).forEach(function(k){var e=_sch.pending[k];if(e.row===p.row)p.cells[e.ymd]=e.value})});
       _plan.data=res;_plan.t0=t0;planRun();
     })
     .withFailureHandler(function(err){body.innerHTML='<div class="pl-empty" style="color:var(--red-main)">'+_escHtml((err&&err.message)||'Server error')+'</div>'})
@@ -4271,9 +4515,10 @@ function planBuild(o){
   var tm=function(v){return parseInt(v.slice(0,2),10)*60+parseInt(v.slice(3),10)};
   var DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   var fd=function(y){var t=new Date(y+'T00:00:00');return DN[t.getDay()]+' '+MO_SHORT[t.getMonth()]+' '+t.getDate()};
-  var vl=schVlMap(),locked=plLocks(),mins=_sch.mins;
+  var vl=schVlMap(),locked=plLocks(),mins={};
   var sitesPresent=[];
   people.forEach(function(p){if(sitesPresent.indexOf(p.site)<0)sitesPresent.push(p.site)});
+  sitesPresent.forEach(function(s){mins[s]=Math.max(_sch.mins[s]||0,o.zero?1:0)});
   var anyMin=sitesPresent.some(function(s){return (mins[s]||0)>0});
   var tgt=[],i;
   for(i=7;i<21;i++)tgt.push(insAdd(t0,i));
@@ -4290,7 +4535,7 @@ function planBuild(o){
     mode[p.ldap]=best;
     tgt.forEach(function(y){
       if(!d.hasData[y]){if(missing.indexOf(y)<0)missing.push(y);return}
-      if((p.cells[y]||'')!=='')return;
+      if((p.cells[y]||'')!==''||_sch.pending[p.row+'|'+y])return;
       var dow=new Date(y+'T00:00:00').getDay();
       var tv=p.cells[insAdd(t0,dow)]||'',pv=p.cells[insAdd(t0,dow-7)]||'';
       var base='';
@@ -4365,6 +4610,21 @@ function planBuild(o){
     return n;
   };
   var hl=function(j){return (j%12||12)+':00 '+(j<12?'AM':'PM')};
+  var defSum=function(site,m,dys){
+    var tot=0,arr=[];
+    dys.forEach(function(w){
+      if(!d.hasData[w]){arr.push(null);return}
+      var h=hoursOf(w,site);arr.push(h);
+      h.forEach(function(c){if(c<m)tot+=m-c});
+    });
+    return {tot:tot,arr:arr};
+  };
+  var restOK=function(l,w,ns){
+    var pv=V[l][insAdd(w,-1)],nx=V[l][insAdd(w,1)];
+    if(isT(pv)&&ns-(tm(pv)+sh-1440)<PL_MIN_REST)return false;
+    if(isT(nx)&&1440+tm(nx)-(ns+sh)<PL_MIN_REST)return false;
+    return true;
+  };
   var better=function(a,b){
     if(!b)return true;
     if(a.gain!==b.gain)return a.gain>b.gain;
@@ -4386,6 +4646,39 @@ function planBuild(o){
           getH(y,s).forEach(function(c,j){if(c<m)def.push({s:s,j:j})});
         });
         if(!def.length)break;
+        if(o.shift){
+          var sb=null,dsites={};
+          def.forEach(function(x){dsites[x.s]=1});
+          people.forEach(function(p){
+            if(!dsites[p.site]||locked[p.ldap])return;
+            var m=mins[p.site];
+            [insAdd(y,-1),y].forEach(function(w){
+              var c=cellAt[p.ldap+'|'+w];
+              if(!c||c.kind!=='copy'||!isT(c.value))return;
+              var st=tm(c.value),dys=[w,insAdd(w,1)],b=defSum(p.site,m,dys);
+              for(var dl=-PL_MAX_SHIFT;dl<=PL_MAX_SHIFT;dl++){
+                if(!dl)continue;
+                var ns=st+dl*60;
+                if(ns<0||ns>=1440||!restOK(p.ldap,w,ns))continue;
+                var prevV=V[p.ldap][w];
+                V[p.ldap][w]=_schHM(ns);
+                var a=defSum(p.site,m,dys),worse=false;
+                V[p.ldap][w]=prevV;
+                if(a.tot>=b.tot)continue;
+                a.arr.forEach(function(h,i){if(!h)return;h.forEach(function(n,j){if(n<m&&n<b.arr[i][j])worse=true})});
+                if(worse)continue;
+                var cand={p:p,c:c,ns:ns,dl:dl,w:w,gain:b.tot-a.tot};
+                if(!sb||cand.gain>sb.gain||(cand.gain===sb.gain&&Math.abs(dl)<Math.abs(sb.dl)))sb=cand;
+              }
+            });
+          });
+          if(sb){
+            V[sb.p.ldap][sb.w]=_schHM(sb.ns);
+            sb.c.value=_schHM(sb.ns);sb.c.kind='shift';
+            sb.c.why=sb.p.site+' had an uncovered interval on '+fd(y)+'; nearest shift moved '+(sb.dl>0?'+':'')+sb.dl+'h to cover it';
+            hc={};continue;
+          }
+        }
         var dowY=new Date(y+'T00:00:00').getDay(),ws=insAdd(y,-dowY),best=null;
         var tw={locked:0,rest:0,run:0,slack:0,nosrc:0};
         people.forEach(function(p){
@@ -4455,7 +4748,9 @@ function planDraw(r){
   var h='<div class="pl-sum">Template <b>'+getWSLabel(_plan.t0)+'</b> ('+_schRange(_plan.t0)+') → <b>'+_schRange(insAdd(_plan.t0,7),14)+'</b>. Only blank cells are filled; anything already in the sheet is left alone. Coverage is checked per site against that site’s minimum.</div>';
   h+='<div class="pl-opts">'+
     '<label><input type="checkbox" '+(o.vl?'checked':'')+' onchange="_plan.o.vl=this.checked;planRun()"> Mark approved VL days as VL</label>'+
+    '<label><input type="checkbox" '+(o.zero?'checked':'')+' onchange="_plan.o.zero=this.checked;planRun()"> Always keep at least 1 on shift per site</label>'+
     '<label><input type="checkbox" '+(o.bal?'checked':'')+' onchange="_plan.o.bal=this.checked;planRun()"> Balance coverage with rest-day swaps</label>'+
+    '<label><input type="checkbox" '+(o.shift?'checked':'')+' onchange="_plan.o.shift=this.checked;planRun()"> Move start times (±3h) before swapping rest days</label>'+
     '<label><input type="checkbox" '+(o.rest2?'checked':'')+' onchange="_plan.o.rest2=this.checked;planRun()"> Keep rest days paired (no single rest days)</label>'+
     '<label><input type="checkbox" '+(o.fair?'checked':'')+' onchange="_plan.o.fair=this.checked;planRun()"> Spread weekend work fairly</label>'+
     '<button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,\'plan\')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt"></span></button></div>';
@@ -4495,7 +4790,7 @@ function planDraw(r){
   }
   if(adj){
     var rows=r.adjusted.slice().sort(function(a,b){return a.ymd<b.ymd?-1:a.ymd>b.ymd?1:(a.nick<b.nick?-1:1)}).map(function(c){
-      return '<tr><td style="width:140px"><b>'+_escHtml(c.nick)+'</b><i>'+_escHtml(c.ldap)+'</i></td><td style="width:100px">'+fd(c.ymd)+'</td><td style="width:120px"><s style="color:var(--text-muted)">'+_escHtml(c.orig)+'</s> → <b>'+_escHtml(c.value)+'</b></td><td><span class="pl-tag '+c.kind+'">'+(c.kind==='vl'?'VL':'Swap')+'</span>'+_escHtml(c.why)+'</td></tr>';
+      return '<tr><td style="width:140px"><b>'+_escHtml(c.nick)+'</b><i>'+_escHtml(c.ldap)+'</i></td><td style="width:100px">'+fd(c.ymd)+'</td><td style="width:120px"><s style="color:var(--text-muted)">'+_escHtml(c.orig)+'</s> → <b>'+_escHtml(c.value)+'</b></td><td><span class="pl-tag '+c.kind+'">'+(c.kind==='vl'?'VL':(c.kind==='shift'?'Shift':'Swap'))+'</span>'+_escHtml(c.why)+'</td></tr>';
     }).join('');
     h+='<div class="pl-h">Adjusted — why it changed</div><table class="pl-tbl">'+rows+'</table>';
   }
@@ -4518,12 +4813,327 @@ function planDraw(r){
 function planApply(){
   var r=_plan.res;if(!r||!r.fills.length)return;
   schPush();
-  r.fills.forEach(function(c){_sch.pending[c.row+'|'+c.ymd]={row:c.row,email:c.email,ymd:c.ymd,value:c.value,old:''}});
+  r.fills.forEach(function(c){var k=c.row+'|'+c.ymd;if(!_sch.pending[k])_sch.pending[k]={row:c.row,email:c.email,ymd:c.ymd,value:c.value,old:''}});
   closePlanner();
   _sch.start=insAdd(_plan.t0,7);
   loadSchedules(0);
   schUpdatePend();
   showToast(r.fills.length+' cells added as unsaved changes. Review, then Save to sheet (Ctrl+Z to undo).','success',6000);
+}
+
+/* ── OPTIMIZE COVERAGE: per site, per hourly interval, per day ── */
+var _opt={data:null,orig:{},t0:'',res:null,o:{shift:true,swap:true,rest2:true,fair:true}};
+
+function closeOptimizer(){
+  var m=document.getElementById('schMinMenu');if(m)m.style.display='none';
+  var o=document.getElementById('optOv');
+  o.classList.remove('on');
+  o.style.display='none';
+  setTimeout(function(){o.style.display=''},0);
+}
+
+function openOptimizer(){
+  if(!(window.google&&google.script)){showToast('Optimize works only in the deployed app.','warn');return}
+  var body=document.getElementById('optBody'),t0=_sch.start;
+  document.getElementById('optApplyBtn').disabled=true;
+  document.getElementById('optApplyTxt').textContent='Nothing to apply';
+  body.innerHTML='<div class="pl-empty">Analyzing coverage…</div>';
+  document.getElementById('optOv').classList.add('on');
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res||!res.success){body.innerHTML='<div class="pl-empty" style="color:var(--red-main)">'+_escHtml((res&&res.message)||'Could not load the schedule.')+'</div>';return}
+      _opt.orig={};
+      res.people.forEach(function(p){
+        var o={};Object.keys(p.cells).forEach(function(y){o[y]=p.cells[y]||''});
+        _opt.orig[p.ldap]=o;
+        Object.keys(_sch.pending).forEach(function(k){var e=_sch.pending[k];if(e.row===p.row)p.cells[e.ymd]=e.value});
+      });
+      _opt.data=res;_opt.t0=t0;optRun();
+    })
+    .withFailureHandler(function(err){body.innerHTML='<div class="pl-empty" style="color:var(--red-main)">'+_escHtml((err&&err.message)||'Server error')+'</div>'})
+    .getScheduleData(insAdd(t0,-1),insAdd(t0,7));
+}
+
+function optRun(){
+  _opt.res=optBuild(_opt.o);
+  optDraw(_opt.res);
+}
+
+function optBuild(o){
+  var d=_opt.data,t0=_opt.t0,people=d.people,sh=(d.shiftHours||9)*60,today=todayYmd();
+  var isT=function(v){return /^\d\d:\d\d$/.test(v||'')};
+  var tm=function(v){return parseInt(v.slice(0,2),10)*60+parseInt(v.slice(3),10)};
+  var DN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var fd=function(y){var t=new Date(y+'T00:00:00');return DN[t.getDay()]+' '+MO_SHORT[t.getMonth()]+' '+t.getDate()};
+  var vl=schVlMap(),locked=plLocks(),sites=[],mins={},tgt=[],i;
+  people.forEach(function(p){if(sites.indexOf(p.site)<0)sites.push(p.site)});
+  sites.forEach(function(s){mins[s]=_sch.mins[s]||0});
+  var anyMin=sites.some(function(s){return mins[s]>0});
+  for(i=0;i<7;i++){var y0=insAdd(t0,i);if(y0>=today&&d.hasData[y0])tgt.push(y0)}
+  var isTgt={};tgt.forEach(function(y){isTgt[y]=1});
+
+  var V={};
+  people.forEach(function(p){V[p.ldap]={};Object.keys(p.cells).forEach(function(y){V[p.ldap][y]=p.cells[y]||''})});
+
+  /* a cell may move only if it is a plain shift or rest day, in the target week, not on VL (approved or pending), and the support is not locked */
+  var movable=function(p,y){
+    if(locked[p.ldap]||!isTgt[y])return false;
+    var f=vl[p.ldap+'|'+y];if(f==='a'||f==='p')return false;
+    var v=V[p.ldap][y];return isT(v)||v==='OFF';
+  };
+
+  var hoursOf=function(y,site){
+    var h=[],j,prev=insAdd(y,-1);
+    for(j=0;j<24;j++)h.push(0);
+    people.forEach(function(p){
+      if(site&&p.site!==site)return;
+      var a=V[p.ldap][y],b=V[p.ldap][prev],s;
+      if(isT(a)){s=tm(a);for(j=0;j<24;j++)if(s<(j+1)*60&&s+sh>j*60)h[j]++}
+      if(isT(b)){s=tm(b);for(j=0;j<24;j++)if(s+sh-1440>j*60)h[j]++}
+    });
+    return h;
+  };
+  var hc={};
+  var getH=function(y,site){var k=y+'|'+site;return hc[k]||(hc[k]=hoursOf(y,site))};
+  var gapsOf=function(y,s){var m=mins[s]||0,r=[];if(!m)return r;getH(y,s).forEach(function(c,j){if(c<m)r.push(j)});return r};
+  var defTot=function(y,s){var m=mins[s]||0,t=0;if(!m)return 0;getH(y,s).forEach(function(c){if(c<m)t+=m-c});return t};
+  var snap=function(){
+    var o2={};
+    tgt.forEach(function(y){sites.forEach(function(s){if(mins[s]>0)o2[y+'|'+s]={hours:gapsOf(y,s),tot:defTot(y,s),low:Math.min.apply(null,getH(y,s))}})});
+    return o2;
+  };
+  var before=snap();
+
+  var defSum=function(site,m,dys){
+    var tot=0,arr=[];
+    dys.forEach(function(w){
+      if(!d.hasData[w]){arr.push(null);return}
+      var h=hoursOf(w,site);arr.push(h);
+      h.forEach(function(c){if(c<m)tot+=m-c});
+    });
+    return {tot:tot,arr:arr};
+  };
+  var restOK=function(l,w,ns){
+    var pv=V[l][insAdd(w,-1)],nx=V[l][insAdd(w,1)];
+    if(isT(pv)&&ns-(tm(pv)+sh-1440)<PL_MIN_REST)return false;
+    if(isT(nx)&&1440+tm(nx)-(ns+sh)<PL_MIN_REST)return false;
+    return true;
+  };
+  var runOK=function(l,y){
+    var n=1,k,v;
+    for(k=1;k<=7;k++){v=V[l][insAdd(y,-k)];if(isT(v))n++;else break}
+    for(k=1;k<=7;k++){v=V[l][insAdd(y,k)];if(isT(v))n++;else break}
+    return n<=PL_MAX_RUN;
+  };
+  var isoCnt=function(l){
+    var n=0,run=0,k,y,v;
+    for(k=-1;k<=7;k++){y=insAdd(t0,k);v=V[l][y];if(v==='OFF')run++;else{if(run===1)n++;run=0}}
+    if(run===1)n++;
+    return n;
+  };
+  var wkw=function(l){
+    var n=0,k,y,g;
+    for(k=0;k<7;k++){y=insAdd(t0,k);g=new Date(y+'T00:00:00').getDay();if((g===0||g===6)&&isT(V[l][y]))n++}
+    return n;
+  };
+  var hl=function(j){return (j%12||12)+':00 '+(j<12?'AM':'PM')};
+
+  var changes={},gaps=[];
+  var setCell=function(p,y,val,kind,why){
+    var k=p.ldap+'|'+y,c=changes[k];
+    if(!c){c=changes[k]={p:p,ymd:y,orig:V[p.ldap][y]||'',value:val,why:why,kind:kind,sheet:(_opt.orig[p.ldap]||{})[y]||''}}
+    else{c.value=val;c.why=why;c.kind=kind}
+    V[p.ldap][y]=val;
+  };
+
+  if(anyMin&&(o.shift||o.swap)){
+    tgt.forEach(function(y){
+      var guard=0;
+      while(guard++<60){
+        var def=[],dsites={};
+        sites.forEach(function(s){var g=gapsOf(y,s);if(g.length){def.push({s:s,hours:g});dsites[s]=1}});
+        if(!def.length)break;
+
+        /* 1) nudge a start time by up to ±3h */
+        if(o.shift){
+          var sb=null;
+          people.forEach(function(p){
+            if(!dsites[p.site])return;
+            var m=mins[p.site];
+            [insAdd(y,-1),y].forEach(function(w){
+              if(!movable(p,w)||!isT(V[p.ldap][w]))return;
+              var ch0=changes[p.ldap+'|'+w];
+              if(ch0&&!isT(ch0.orig))return;   /* a day made by a swap is not nudged again */
+              var home=tm(ch0?ch0.orig:V[p.ldap][w]);
+              var st=tm(V[p.ldap][w]),dys=[w,insAdd(w,1)],b=defSum(p.site,m,dys);
+              for(var dl=-PL_MAX_SHIFT;dl<=PL_MAX_SHIFT;dl++){
+                if(!dl)continue;
+                var ns=st+dl*60;
+                if(ns<0||ns>=1440||Math.abs(ns-home)>PL_MAX_SHIFT*60||!restOK(p.ldap,w,ns))continue;
+                var prevV=V[p.ldap][w];
+                V[p.ldap][w]=_schHM(ns);
+                var a=defSum(p.site,m,dys),worse=false;
+                V[p.ldap][w]=prevV;
+                if(a.tot>=b.tot)continue;
+                a.arr.forEach(function(h,ix){if(!h)return;h.forEach(function(n,j){if(n<m&&n<b.arr[ix][j])worse=true})});
+                if(worse)continue;
+                var cand={p:p,ns:ns,dl:dl,w:w,gain:b.tot-a.tot};
+                if(!sb||cand.gain>sb.gain||(cand.gain===sb.gain&&Math.abs(dl)<Math.abs(sb.dl)))sb=cand;
+              }
+            });
+          });
+          if(sb){
+            setCell(sb.p,sb.w,_schHM(sb.ns),'shift',sb.p.site+' was under its minimum on '+fd(y)+'; start moved '+(sb.dl>0?'+':'')+sb.dl+'h to cover it');
+            hc={};continue;
+          }
+        }
+
+        /* 2) work a rest day, give up a day that has coverage to spare */
+        if(o.swap){
+          var best=null,tw={locked:0,rest:0,run:0,slack:0,nosrc:0};
+          people.forEach(function(p){
+            var m=mins[p.site]||0;if(!m||!dsites[p.site])return;
+            if(V[p.ldap][y]!=='OFF'||vl[p.ldap+'|'+y])return;
+            if(locked[p.ldap]){tw.locked++;return}
+            if(!movable(p,y))return;
+            var hs=getH(y,p.site),found=false,rs={slack:0,run:0,rest:0,src:0};
+            for(var k=0;k<7;k++){
+              var w=insAdd(t0,k);if(w===y)continue;
+              if(!movable(p,w)||!isT(V[p.ldap][w]))continue;
+              var s=V[p.ldap][w],st=tm(s),gain=0,j;
+              for(j=0;j<24;j++)if(hs[j]<m&&st<(j+1)*60&&st+sh>j*60)gain++;
+              if(!gain){rs.src++;continue}
+              if(!restOK(p.ldap,y,st)){rs.rest++;continue}
+              var hw=getH(w,p.site),hw1=getH(insAdd(w,1),p.site),slack=99,ok=true;
+              for(j=0;j<24;j++){
+                if(st<(j+1)*60&&st+sh>j*60){var l=hw[j]-1-m;if(l<0){ok=false;break}if(l<slack)slack=l}
+                if(st+sh-1440>j*60&&d.hasData[insAdd(w,1)]){var l2=hw1[j]-1-m;if(l2<0){ok=false;break}if(l2<slack)slack=l2}
+              }
+              if(!ok){rs.slack++;continue}
+              var pv=V[p.ldap][y],pw=V[p.ldap][w];
+              var i0=o.rest2?isoCnt(p.ldap):0;
+              V[p.ldap][y]=s;V[p.ldap][w]='OFF';
+              var rok=runOK(p.ldap,y),i1=o.rest2?isoCnt(p.ldap):0;
+              V[p.ldap][y]=pv;V[p.ldap][w]=pw;
+              if(!rok){rs.run++;continue}
+              if(o.rest2&&i1>i0){rs.rest++;continue}
+              found=true;
+              var cand={p:p,w:w,s:s,gain:gain,slack:slack,dist:Math.abs(k-new Date(y+'T00:00:00').getDay()),wk:wkw(p.ldap)};
+              var bt=!best||cand.gain>best.gain||(cand.gain===best.gain&&((o.fair&&cand.wk!==best.wk)?cand.wk<best.wk:(cand.slack!==best.slack?cand.slack>best.slack:cand.dist<best.dist)));
+              if(bt)best=cand;
+            }
+            if(!found){
+              var top='nosrc',tv=0;
+              ['slack','run','rest'].forEach(function(r){if(rs[r]>tv){tv=rs[r];top=r}});
+              tw[top]++;
+            }
+          });
+          if(best){
+            setCell(best.p,y,best.s,'swap',best.p.site+' was under its minimum on '+fd(y)+'; works this day, rest day moves to '+fd(best.w));
+            setCell(best.p,best.w,'OFF','swap','New rest day (works '+fd(y)+' instead). Same number of working days this week');
+            hc={};continue;
+          }
+          def.forEach(function(x){gaps.push({ymd:y,site:x.s,min:mins[x.s],hours:x.hours,why:tw})});
+        }else{
+          def.forEach(function(x){gaps.push({ymd:y,site:x.s,min:mins[x.s],hours:x.hours,why:{locked:0,rest:0,run:0,slack:0,nosrc:0}})});
+        }
+        break;
+      }
+    });
+  }
+  var list=Object.keys(changes).map(function(k){return changes[k]}).filter(function(c){return c.value!==c.orig});
+  list.forEach(function(c){c.kind=(isT(c.orig)&&isT(c.value))?'shift':'swap'});
+  list.sort(function(a,b){return a.ymd<b.ymd?-1:a.ymd>b.ymd?1:((a.p.nick||a.p.ldap)<(b.p.nick||b.p.ldap)?-1:1)});
+  var nSh=list.filter(function(c){return c.kind==='shift'}).length,nSw=Math.round((list.length-nSh)/2);
+  var after=snap(),moved={};
+  list.forEach(function(c){moved[c.p.ldap]=1});
+  return {tgt:tgt,list:list,gaps:gaps,before:before,after:after,fd:fd,hl:hl,anyMin:anyMin,sites:sites,mins:mins,nShift:nSh,nSwap:nSw,people:Object.keys(moved).length};
+}
+
+function optDraw(r){
+  var o=_opt.o,body=document.getElementById('optBody'),fd=r.fd,hl=r.hl;
+  var ranges=function(hs){
+    if(!hs.length)return 'none';
+    var out=[],a=hs[0],b=hs[0],i;
+    for(i=1;i<=hs.length;i++){
+      if(i<hs.length&&hs[i]===b+1){b=hs[i];continue}
+      out.push(hl(a)+' – '+hl((b+1)%24));
+      if(i<hs.length){a=hs[i];b=hs[i]}
+    }
+    return out.join(', ');
+  };
+  var h='<div class="pl-sum">Week <b>'+getWSLabel(_opt.t0)+'</b> ('+_schRange(_opt.t0)+'). Each site is checked against its own minimum, hour by hour, for every day from today. Nothing is saved until you press <b>Save to sheet</b>. Approved or pending VL days, LOA days and the planner’s “Never swap” list are never touched.</div>';
+  h+='<div class="pl-opts">'+
+    '<label><input type="checkbox" '+(o.shift?'checked':'')+' onchange="_opt.o.shift=this.checked;optRun()"> Move start times (±3h) first</label>'+
+    '<label><input type="checkbox" '+(o.swap?'checked':'')+' onchange="_opt.o.swap=this.checked;optRun()"> Swap rest days</label>'+
+    '<label><input type="checkbox" '+(o.rest2?'checked':'')+' onchange="_opt.o.rest2=this.checked;optRun()"> Keep rest days paired</label>'+
+    '<label><input type="checkbox" '+(o.fair?'checked':'')+' onchange="_opt.o.fair=this.checked;optRun()"> Spread weekend work fairly</label>'+
+    '<button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,\'opt\')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt"></span></button></div>';
+  var btn=document.getElementById('optApplyBtn'),n=r.list.length;
+  if(!r.anyMin){
+    h+='<div class="pl-note info">Set a minimum for at least one site (button above). The optimizer fills any hour that falls below it.</div>';
+    body.innerHTML=h;schMinRefresh();btn.disabled=true;document.getElementById('optApplyTxt').textContent='Set minimums first';return;
+  }
+  if(!r.tgt.length){
+    h+='<div class="pl-note info">No days from today onward in this week have schedule columns, so there is nothing to optimize. Go to a current or future week.</div>';
+    body.innerHTML=h;schMinRefresh();btn.disabled=true;document.getElementById('optApplyTxt').textContent='Nothing to apply';return;
+  }
+  var bInt=0,aInt=0;
+  Object.keys(r.before).forEach(function(k){bInt+=r.before[k].hours.length});
+  Object.keys(r.after).forEach(function(k){aInt+=r.after[k].hours.length});
+  h+='<div class="pl-stats"><div class="pl-st '+(bInt?'warn':'')+'"><b>'+bInt+'</b><span>intervals under minimum now</span></div>'+
+    '<div class="pl-st '+(aInt?'bad':'')+'"><b>'+aInt+'</b><span>after optimizing</span></div>'+
+    '<div class="pl-st"><b>'+r.people+'</b><span>supports moved</span></div>'+
+    '<div class="pl-st"><b>'+n+'</b><span>cells changed ('+r.nShift+' start times, '+r.nSwap+' rest-day swaps)</span></div></div>';
+
+  var rows='';
+  r.tgt.forEach(function(y){
+    r.sites.forEach(function(s){
+      var k=y+'|'+s,b=r.before[k],a=r.after[k];
+      if(!b||!b.hours.length)return;
+      rows+='<tr><td style="width:110px"><b>'+fd(y)+'</b></td><td style="width:70px">'+_escHtml(s)+' <i>min '+r.mins[s]+'</i></td>'+
+        '<td>'+ranges(b.hours)+'</td><td>'+(a.hours.length?'<span style="color:var(--red-main);font-weight:700">'+ranges(a.hours)+'</span>':'<span style="color:var(--green-txt);font-weight:700">Covered</span>')+'</td></tr>';
+    });
+  });
+  if(rows)h+='<div class="pl-h">Intervals under minimum, per day and site</div><table class="pl-tbl"><tr><td style="width:110px"><i>Day</i></td><td style="width:70px"><i>Site</i></td><td><i>Under minimum now</i></td><td><i>After optimizing</i></td></tr>'+rows+'</table>';
+  else h+='<div class="pl-note info">Every site is already at or above its minimum in every hour for the rest of this week. Nothing to optimize.</div>';
+
+  if(n){
+    h+='<div class="pl-h">Who moves, and why</div><table class="pl-tbl">'+r.list.map(function(c){
+      return '<tr><td style="width:140px"><b>'+_escHtml(c.p.nick||c.p.ldap)+'</b><i>'+_escHtml(c.p.site)+'</i></td><td style="width:100px">'+fd(c.ymd)+'</td><td style="width:130px"><s style="color:var(--text-muted)">'+_escHtml(c.orig||'blank')+'</s> → <b>'+_escHtml(c.value)+'</b></td><td><span class="pl-tag '+c.kind+'">'+(c.kind==='shift'?'Time':'Swap')+'</span>'+_escHtml(c.why)+'</td></tr>';
+    }).join('')+'</table>';
+  }
+  if(r.gaps.length){
+    h+='<div class="pl-h">Could not fix</div>'+r.gaps.map(function(g){
+      var w=g.why,parts=[];
+      if(w.locked)parts.push(w.locked+' locked');
+      if(w.rest)parts.push(w.rest+' would break rest rules');
+      if(w.run)parts.push(w.run+' would work more than '+PL_MAX_RUN+' days in a row');
+      if(w.slack)parts.push(w.slack+' would push another day below its minimum');
+      if(w.nosrc)parts.push(w.nosrc+' have no working day to swap');
+      return '<div class="pl-note bad"><b>'+fd(g.ymd)+' · '+_escHtml(g.site)+'</b>: still under '+g.min+' at '+ranges(g.hours)+'. '+
+        (parts.length?'Supports with this day off who could cover but were skipped: '+parts.join('; ')+'.':'No '+_escHtml(g.site)+' support has this day off with a usable shift.')+
+        ' Needs overtime, a manual change, or a lower minimum.</div>';
+    }).join('');
+  }
+  body.innerHTML=h;
+  schMinRefresh();
+  btn.disabled=!n;
+  document.getElementById('optApplyTxt').textContent=n?'Add '+n+' cells to editor':'Nothing to change';
+}
+
+function optApply(){
+  var r=_opt.res;if(!r||!r.list.length)return;
+  schPush();
+  r.list.forEach(function(c){
+    var k=c.p.row+'|'+c.ymd,ex=_sch.pending[k],old=ex?ex.old:c.sheet;
+    if(c.value===old)delete _sch.pending[k];
+    else _sch.pending[k]={row:c.p.row,email:c.p.email,ymd:c.ymd,value:c.value,old:old};
+  });
+  closeOptimizer();
+  loadSchedules(0,false,true);
+  schUpdatePend();
+  showToast(r.list.length+' cells added as unsaved changes. Review them, then Save to sheet (Ctrl+Z to undo).','success',6000);
 }
 
 /* ── PER-SITE MINIMUMS ── */
@@ -4556,6 +5166,7 @@ function schSetSiteMin(s,v){
   if(k==='sched')renderSchedules();
   else if(k==='ins')renderInsights();
   else if(k==='plan')planRun();
+  else if(k==='opt')optRun();
   else if(k==='queue')renderAdminQueue(true);
 }
 document.addEventListener('mousedown',function(e){
@@ -4679,7 +5290,7 @@ function impLoad(){
   var floor=insAdd(todayYmd(),-35),cap=insAdd(todayYmd(),120);
   if(s<floor)s=floor;
   if(en>cap)en=cap;
-  if(_imp.sched&&_imp.s<=s&&_imp.e>=en&&Date.now()-_imp.at<120000){impPaint();return}
+  if(_imp.sched&&_imp.s<=s&&_imp.e>=en&&Date.now()-_imp.at<30000){impPaint();return}
   var tok=++_imp.tok;
   impFetch(s,en,function(sch,err){
     if(tok!==_imp.tok)return;
@@ -5014,7 +5625,8 @@ function schSyncRun(){
       var m=res.applied+' schedule day'+(res.applied===1?'':'s')+' set to VL from '+res.requests+' approved request'+(res.requests===1?'':'s');
       if(res.noColumn)m+=' · '+res.noColumn+' day(s) have no column in the sheet yet';
       if(res.noRow)m+=' · '+res.noRow+' request(s) matched nobody in Support Schedules';
-      showToast(m,res.applied?'success':'info',7000);
+      if(res.restored)m+=' · '+res.restored+' day(s) restored (denied / pending / removed)';
+      showToast(m,(res.applied||res.restored)?'success':'info',7000);
       schInvalidate();
       loadSchedules(0,false,true);
     })
@@ -5138,7 +5750,6 @@ function renderAdminQueue(skipDropdownRebuild){
     html+='<input type="text" id="'+cid+'" placeholder="Note..." style="width:110px;padding:5px 8px;border:1px solid var(--border-light);border-radius:6px;font-size:11.5px;font-family:\'Google Sans\',sans-serif;outline:none;background:var(--bg-surface);color:var(--text-main)">';
     html+='<button class="ac-act-btn btn-appr" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'Approved\',this,\''+cid+'\')">✓ Approve</button>';
     html+='<button class="ac-act-btn btn-deny" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'Denied\',this,\''+cid+'\')">✕ Deny</button>';
-    html+='<button class="ac-act-btn btn-noal" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'No Allocation\',this,\''+cid+'\')">No Alloc</button>';
     html+='</div></td></tr>';
   });
   html+='</tbody></table>';
@@ -5577,9 +6188,9 @@ function openViewModal(ev,targetId,clickedDate){
 
   var okUrl=function(u){return u&&/^https?:\/\//i.test(u)};
   var links='';
-  if(okUrl(e.creditsUrl))links+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none">📸 VL credits snip</a>';
+  if(okUrl(e.creditsUrl))links+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none">📸 VL credits snip'+(e.creditsSource?' ('+_escHtml(e.creditsSource)+')':'')+'</a>'+(e.creditsAccruals?'<span style="font-weight:400;color:var(--text-muted)"> · '+_escHtml(e.creditsAccruals)+' accruals</span>':'');
   if(okUrl(e.docsUrl))links+=(links?' &nbsp;·&nbsp; ':'')+'<a href="'+_escHtml(e.docsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none">📄 Supporting doc</a>';
-  if(e.bcpSubject)links+=(links?'<br>':'')+'<span style="font-weight:400;color:var(--text-muted)">BCP: '+_escHtml(e.bcpSubject)+'</span>';
+  var _bl=bcpViewLine(e);if(_bl)links+=(links?'<br>':'')+_bl;
   box('viewModalLinksBox',!!links);
   document.getElementById('viewModalLinks').innerHTML=links;
 
@@ -5606,7 +6217,6 @@ function openViewModal(ev,targetId,clickedDate){
           '<span>Unselected days:</span>'+
           '<select id="vmRestStatus" class="sch-sel" style="height:30px;padding:0 28px 0 10px;font-size:12px">'+
             '<option value="Denied">Mark as Denied</option>'+
-            '<option value="No Allocation">Mark as No Allocation</option>'+
             '<option value="Keep">Keep as '+_escHtml(e.status||'Pending')+'</option>'+
           '</select>'+
         '</div>';
@@ -5659,6 +6269,7 @@ function refreshDateInfo(){
   var ok=document.getElementById('dateOk');
   ok.className='ca ca-ok';
   document.getElementById('peerBlock').classList.remove('on');
+  var _ow=document.getElementById('offWarn');if(_ow)_ow.classList.remove('on');
   if(!s||!e){checkCoverageConflicts();return}
   if(e<s){ok.className='ca ca-e on';ok.textContent='End date is before the start date.';return}
   var n=dayCount(s,e);
@@ -5666,7 +6277,40 @@ function refreshDateInfo(){
   ok.textContent='✓ '+n+' day'+(n>1?'s':'')+': '+s+(n>1?' to '+e:'');
   updatePeerVisibility(s,e);
   checkCoverageConflicts();
+  checkOffDays(s,e);
   saveDraft();
+}
+var _offTok=0,_offCache={};
+function checkOffDays(s,e){
+  var el=document.getElementById('offWarn');if(!el)return;
+  el.classList.remove('on');
+  if(!s||!e||e<s||!window.myRole||!(window.google&&google.script))return;
+  var tok=++_offTok,key=s+'|'+e,hit=_offCache[key];
+  var show=function(res){
+    if(tok!==_offTok||!res||!res.success)return;
+    var me=(window.myLdap||'').toLowerCase();
+    var p=res.people.find(function(x){return x.ldap===me});
+    if(!p)return;
+    var off=[],plotted=0;
+    impDays(s,e).forEach(function(y){
+      if(!res.hasData[y])return;          // no schedule column yet
+      var v=p.cells[y]||'';
+      if(!v)return;                       // blank = not plotted yet
+      plotted++;
+      if(v==='OFF')off.push(y);
+    });
+    if(!off.length)return;
+    var all=(off.length===plotted);
+    el.innerHTML='⚠ '+(all?'Every scheduled day in this request':'<b>'+off.length+' day'+(off.length===1?'':'s')+'</b> in this request')+' is your <b>OFF day</b> per the published schedule: <b>'+_escHtml(_odList(off))+'</b>. '+(all?'You may not need VL for these dates.':'You may not need VL for those days.')+' Double-check your dates before submitting.';
+    el.classList.add('on');
+  };
+  if(hit&&Date.now()-hit.t<60000){show(hit.res);return}
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(res&&res.success)_offCache[key]={t:Date.now(),res:res};
+      show(res);
+    })
+    .getMyScheduleView(s,e);
 }
 var _covSel=[];
 function covSearch(q){
@@ -5751,13 +6395,14 @@ function checkCoverageConflicts(){
 function resetFormFields(){
   clearFieldErrors();
   document.getElementById('errMsg').style.display='none';
-  ['vlDate','vlEnd','vlReason','vlDocs','vlCredits','vlBcp','covInput','rsVal'].forEach(function(id){document.getElementById(id).value=''});
+  ['vlDate','vlEnd','vlReason','vlDocs','vlCredits','vlBcp','vlBcpNotes','covInput','rsVal','crAcc'].forEach(function(id){document.getElementById(id).value=''});
   setDateLimits();
   _covSel=[];renderCovChips();
   document.querySelectorAll('#rsGrp .chip').forEach(function(c){c.classList.remove('a-blue','a-red','a-green','a-yellow')});
   var decl=document.getElementById('declChk');
   if(decl){decl.checked=false;toggleSub()}
   document.getElementById('dateOk').className='ca ca-ok';
+  var _ow2=document.getElementById('offWarn');if(_ow2)_ow2.classList.remove('on');
   document.getElementById('peerBlock').classList.remove('on');
   document.getElementById('covWarn').classList.remove('on');
 }
@@ -5781,9 +6426,11 @@ function avatarHtml(ldap,cls){
   return '<div class="pc-avatar '+(cls||'')+'">'+_escHtml(l.charAt(0))+'<img src="https://moma-teams-photos.corp.google.com/photos/'+l+'?sz=96&type=PLUS" alt="" onerror="this.style.display=\'none\'"></div>';
 }
 
+function crSource(){return /supervisor|team\s*lead/i.test(window.myRole||'')?'Workday':'eStart'}
 function fillIdentity(){
   var el=document.getElementById('profileCard');
   if(!el)return;
+  var _t=document.getElementById('crSrcTag');if(_t)_t.textContent=crSource();
   if(!window.myRole){
     el.innerHTML=avatarHtml('?','')+'<div class="pc-info"><div class="pc-name">Not registered</div><div class="pc-email">Contact your manager to be added to the Roles list.</div></div>';
     return;
@@ -5840,7 +6487,7 @@ function updatePeerVisibility(s,e){
 
 function toggleSub(){document.getElementById('subBtn').disabled=!document.getElementById('declChk').checked}
 
-function collectData(){return{startDate:document.getElementById('vlDate').value,endDate:document.getElementById('vlEnd').value,vlType:document.getElementById('rsVal').value,reason:document.getElementById('vlReason').value.trim(),docsUrl:document.getElementById('vlDocs').value.trim(),coverage:_covSel.slice(),creditsUrl:document.getElementById('vlCredits').value.trim(),bcpSubject:document.getElementById('vlBcp').value.trim(),declared:document.getElementById('declChk').checked?'true':'false'}}
+function collectData(){return{startDate:document.getElementById('vlDate').value,endDate:document.getElementById('vlEnd').value,vlType:document.getElementById('rsVal').value,reason:document.getElementById('vlReason').value.trim(),docsUrl:document.getElementById('vlDocs').value.trim(),coverage:_covSel.slice(),creditsSource:crSource(),creditsAccruals:document.getElementById('crAcc').value,creditsUrl:document.getElementById('vlCredits').value.trim(),bcpSubject:((document.getElementById('vlBcp')||{}).value||'').trim(),bcpNotes:((document.getElementById('vlBcpNotes')||{}).value||'').trim(),declared:document.getElementById('declChk').checked?'true':'false'}}
 
 function clearFieldErrors(){
   document.querySelectorAll('.field-error').forEach(function(el){el.classList.remove('field-error')});
@@ -5865,9 +6512,10 @@ function clientValidate(d){
   if(!d.vlType){highlightFieldError('rsGrp','errChip-rsGrp');return'Please select a VL Type.'}
   if(d.reason.length<3){document.getElementById('vlReason').classList.add('field-error');return'Please enter your reason for VL.'}
   if(!d.coverage.length){document.getElementById('covBox').classList.add('field-error');return'Please add at least one person covering for you.'}
+  if(d.creditsAccruals===''||isNaN(parseFloat(d.creditsAccruals))||parseFloat(d.creditsAccruals)<0){document.getElementById('crAcc').classList.add('field-error');return'Please enter your VL accruals as a number.'}
   if(!d.creditsUrl||!/^https?:\/\//i.test(d.creditsUrl)){document.getElementById('vlCredits').classList.add('field-error');return'Please enter a valid link to your VL credits snip.'}
   if(d.docsUrl&&!/^https?:\/\//i.test(d.docsUrl)){document.getElementById('vlDocs').classList.add('field-error');return'Supporting documents must be a valid link.'}
-  if(!d.bcpSubject){document.getElementById('vlBcp').classList.add('field-error');return'Please enter the email subject of your BCP.'}
+  if(!BCP_AUTO_COMPOSE&&!d.bcpSubject){document.getElementById('vlBcp').classList.add('field-error');return'Please enter the email subject of your BCP.'}
   var me=(currentUserEmail||'').toLowerCase();
   var overlap=serverEvents.some(function(e){return (e.email||'').toLowerCase()===me&&e.date>=d.startDate&&e.date<=d.endDate&&getStatProps(e.status).key!=='rejected'});
   if(overlap)return'You already have a request overlapping these dates.';
@@ -5879,7 +6527,7 @@ function openConfirm(){
   clearFieldErrors();
   var d=collectData();var err=clientValidate(d);if(err){showErr('❌ '+err);return}_pendingData=d;
   var n=dayCount(d.startDate,d.endDate);
-  var rows=[['Filing as',(window.myLdap||'')+' · '+window.myRole],['Site',window.mySite||'—'],['Dates',d.startDate+(n>1?' to '+d.endDate:'')+' ('+n+' day'+(n>1?'s':'')+')'],['VL Type',formatReason(d.vlType)],['Reason',_escHtml(d.reason)],['Coverage',_escHtml(d.coverage.join(', '))],['BCP subject',_escHtml(d.bcpSubject)]];
+  var rows=[['Filing as',(window.myLdap||'')+' · '+window.myRole],['Site',window.mySite||'—'],['Dates',d.startDate+(n>1?' to '+d.endDate:'')+' ('+n+' day'+(n>1?'s':'')+')'],['VL Type',formatReason(d.vlType)],['Reason',_escHtml(d.reason)],['Coverage',_escHtml(d.coverage.join(', '))],['VL accruals',_escHtml(d.creditsAccruals)+' ('+crSource()+')'],BCP_AUTO_COMPOSE?['BCP email','Opens in your Gmail right after you submit']:['BCP subject',_escHtml(d.bcpSubject)]];
   document.getElementById('cnfRows').innerHTML=rows.map(function(r){return'<div class="crow"><span class="cl">'+r[0]+'</span><span class="cv">'+(r[1]||'—')+'</span></div>'}).join('');
   document.getElementById('cnfOv').classList.add('on');
 lockConfirmButton();
@@ -5920,6 +6568,12 @@ function submitForm(){
         document.getElementById('sucTxt').textContent='Your leave request has been logged. You\'ll be notified once reviewed.';
         document.getElementById('sucDet').innerHTML='<strong>'+(window.myLdap||'')+' — '+_pendingData.startDate+(_pendingData.endDate&&_pendingData.endDate!==_pendingData.startDate?' to '+_pendingData.endDate:'')+'</strong><br>'+window.myRole+' · '+formatReason(_pendingData.vlType)+' · '+(window.mySite||'');
         document.getElementById('sucEmail').textContent='📧 A confirmation will be sent once your request is reviewed.';
+        var _sb=document.getElementById('sucBcp');
+        if(BCP_AUTO_COMPOSE&&res.bcp){
+          _bcpLast={p:res.bcp,uuid:res.uuid,f:{kind:'new',startDate:_pendingData.startDate,endDate:_pendingData.endDate||_pendingData.startDate,vlType:_pendingData.vlType,docsUrl:_pendingData.docsUrl,notes:_pendingData.bcpNotes||''}};
+          _sb.style.display='flex';
+          document.getElementById('sucBcpTxt').textContent='Copy formatted email & open Gmail';
+        }else _sb.style.display='none';
         document.getElementById('sucOv').classList.add('on');
         clearDraft();
       }else showErr('❌ <strong>Error:</strong> '+(res.message||'Unknown error. Please try again.'));
@@ -5946,7 +6600,8 @@ function restoreDraft(){
     document.getElementById('vlReason').value=d.reason||'';
     document.getElementById('vlDocs').value=d.docsUrl||'';
     document.getElementById('vlCredits').value=d.creditsUrl||'';
-    document.getElementById('vlBcp').value=d.bcpSubject||'';
+    var _bn=document.getElementById('vlBcpNotes');if(_bn)_bn.value=d.bcpNotes||'';
+    var _bs=document.getElementById('vlBcp');if(_bs)_bs.value=d.bcpSubject||'';
     if(d.vlType){
       document.querySelectorAll('#rsGrp .chip').forEach(function(c){
         CHIP_COLORS.forEach(function(cc){c.classList.remove(cc)});
@@ -5954,6 +6609,7 @@ function restoreDraft(){
       });
       document.getElementById('rsVal').value=d.vlType;
     }
+    if(d.creditsAccruals!==undefined)document.getElementById('crAcc').value=d.creditsAccruals;
     _covSel=Array.isArray(d.coverage)?d.coverage.slice(0,10):[];
     renderCovChips();
     if(d.declared==='true'){document.getElementById('declChk').checked=true;toggleSub()}
@@ -6001,7 +6657,7 @@ function pfFmt(s){var p=s.split('-');return MO_SHORT[+p[1]-1]+' '+(+p[2])}
 function pfUpdate(){
   var s=document.getElementById('vlDate').value,e=document.getElementById('vlEnd').value;
   var type=document.getElementById('rsVal').value,reason=document.getElementById('vlReason').value.trim();
-  var credits=document.getElementById('vlCredits').value.trim(),bcp=document.getElementById('vlBcp').value.trim();
+  var credits=document.getElementById('vlCredits').value.trim(),bcp=BCP_AUTO_COMPOSE?'x':((document.getElementById('vlBcp')||{}).value||'').trim();
   var decl=document.getElementById('declChk').checked;
   var n=(s&&e&&e>=s)?dayCount(s,e):0;
   var st={
@@ -6009,14 +6665,14 @@ function pfUpdate(){
     dates:n>0,
     reason:!!type&&reason.length>=3,
     cover:_covSel.length>0,
-    valid:/^https?:\/\//i.test(credits)&&!!bcp&&decl
+    valid:/^https?:\/\//i.test(credits)&&document.getElementById('crAcc').value!==''&&!!bcp&&decl
   };
   var sub={
     who:window.myRole?((window.myLdap||'')+' · '+(window.mySite||'')):'Not registered',
     dates:n?((s===e?pfFmt(s):pfFmt(s)+' – '+pfFmt(e))+' · '+n+' day'+(n>1?'s':'')):'Pick start and end',
     reason:type||'Choose a type',
     cover:_covSel.length?(_covSel.length+' selected'):'Add who covers',
-    valid:st.valid?'Ready':'Snip, BCP, agree'
+    valid:st.valid?'Ready':(BCP_AUTO_COMPOSE?'Snip, agree':'Snip, BCP, agree')
   };
   var done=0;
   PF_STEPS.forEach(function(k){
@@ -6423,10 +7079,15 @@ function msMode(m){_ms.mode=m;msRender()}
 function msSearch(v){_ms.q=(v||'').trim().toLowerCase();msRender()}
 function msToggleSite(b){
   if(!_ms.sites)return;
-  var s=b.getAttribute('data-s'),i=_ms.sites.indexOf(s);
-  if(i>=0){if(_ms.sites.length>1)_ms.sites.splice(i,1)}else _ms.sites.push(s);
+  var ev=window.event||{},s=b.getAttribute('data-s'),i=_ms.sites.indexOf(s);
+  if(ev.ctrlKey||ev.metaKey||ev.shiftKey){
+    if(i>=0){if(_ms.sites.length>1)_ms.sites.splice(i,1)}else _ms.sites.push(s);
+  }else if(_ms.sites.length===1&&i===0)_ms.sites=['CEB','VNCC','UBT','DAV'];
+  else _ms.sites=[s];
   msRender();
 }
+function msSitesAll(){_ms.sites=['CEB','VNCC','UBT','DAV'];msRender()}
+function siteAll(sel,fn){document.querySelectorAll(sel).forEach(function(c){c.checked=true});fn(true)}
 function msMin(v){return parseInt(v.slice(0,2),10)*60+parseInt(v.slice(3),10)}
 function msCell(p,y,d,vl,dl){
   if(!d.hasData[y])return '<td class="sch-c nd">–</td>';
@@ -6932,6 +7593,21 @@ document.addEventListener('visibilitychange',function(){
   if(document.hidden)stopLiveSync();
   else{setTimeout(_doLiveSync,500);startLiveSync()}
 });
+/* site chips: click = only that site; click the only selected one = all; Ctrl/Cmd/Shift+click = add/remove */
+document.addEventListener('click',function(e){
+  var lab=e.target.closest&&e.target.closest('label.ac-wg-chip,label.filter-chip');
+  if(!lab)return;
+  var inp=lab.querySelector('input[type=checkbox]');
+  if(!inp)return;
+  var sel=['.sch-site-chk','.ac-site-filter','.ins-site-chk','.st-filter'].find(function(s){return inp.matches(s)});
+  if(!sel||e.ctrlKey||e.metaKey||e.shiftKey)return;
+  e.preventDefault();
+  var all=Array.from(document.querySelectorAll(sel));
+  var only=inp.checked&&all.filter(function(c){return c.checked}).length===1;
+  all.forEach(function(c){c.checked=only?true:(c===inp)});
+  inp.dispatchEvent(new Event('change',{bubbles:true}));
+},true);
+
 </script>
 </body>
 </html>
