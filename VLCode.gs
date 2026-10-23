@@ -136,7 +136,7 @@ function _redactEvents(events, email) {
     if (e.email === me) return e;
     var c = {};
     Object.keys(e).forEach(function(k) { c[k] = e[k]; });
-    c.reasonText = ""; c.docsUrl = ""; c.creditsUrl = ""; c.bcpSubject = "";
+    c.reasonText = ""; c.docsUrl = ""; c.creditsUrl = ""; c.creditsSource = ""; c.creditsAccruals = ""; c.bcpSubject = "";
     c.remarks = ""; c.confirmation = ""; c.emailSent = ""; c.cancelReq = ""; c.cancelDays = "";
     return c;
   });
@@ -365,8 +365,9 @@ function getCalendarData() {
           ldap: ldap, role: roleVal, site: g(row, "site"),
           date: ymd, startDate: startYmd, endDate: endYmd, totalDays: dayList.length,
           vlType: vlTypeVal, reasonText: g(row, "reason"), docsUrl: g(row, "supportingdocs"),
-          coverage: g(row, "supportcoverage"), creditsUrl: g(row, "vlcreditssnip"),
+          coverage: g(row, "supportcoverage"), creditsUrl: g(row, "vlcreditssnip"), creditsSource: g(row, "vlcreditssource"), creditsAccruals: g(row, "vlcreditsaccruals"),
           bcpSubject: g(row, "bcpemailsubject"),
+          bcpNotes: g(row, "bcpnotes"), bcpSentFor: g(row, "bcpsentfor"), bcpOpened: g(row, "bcpopened"),
           month: g(row, "month"),
           status: g(row, "status") || "Pending",
           remarks: g(row, "comments"),
@@ -651,13 +652,17 @@ function processVLForm(data) {
   var reason     = (data.reason || "").toString().trim();
   var docsUrl    = (data.docsUrl || "").toString().trim();
   var creditsUrl = (data.creditsUrl || "").toString().trim();
+  var bcpNotes = (data.bcpNotes || "").toString().trim();
   var bcpSubject = (data.bcpSubject || "").toString().trim();
+  var creditsSource = /supervisor|team\s*lead/i.test(config.role || "") ? "Workday" : "eStart";
+  var creditsAccruals = parseFloat(data.creditsAccruals);
   if (!vlType) return { status: "error", message: "VL Type is required." };
-  if (["Out of Town / Vacation", "Personal", "Family Gathering", "Emergency"].indexOf(vlType) < 0) return { status: "error", message: "Invalid VL Type." };
+  if (["Out of Town / Vacation", "Personal", "Family Gathering", "Emergency", "Mental Wellness", "Birthday", "Medical", "Bereavement", "Government / Legal", "Moving House"].indexOf(vlType) < 0) return { status: "error", message: "Invalid VL Type." };
   if (reason.length < 3) return { status: "error", message: "Reason for VL is required." };
+  if (isNaN(creditsAccruals) || creditsAccruals < 0 || creditsAccruals > 999) return { status: "error", message: "Enter your VL accruals as a number." };
   if (!/^https?:\/\//i.test(creditsUrl)) return { status: "error", message: "A valid VL credits snip link is required." };
   if (docsUrl && !/^https?:\/\//i.test(docsUrl)) return { status: "error", message: "Supporting documents must be a valid link." };
-  if (!bcpSubject) return { status: "error", message: "Email subject of your BCP is required." };
+  if (!BCP_AUTO_COMPOSE && !bcpSubject) return { status: "error", message: "Email subject of your BCP is required." };
 
   var myLdap   = actor.split("@")[0].toLowerCase();
   var coverage = (Array.isArray(data.coverage) ? data.coverage : []).map(function(c) {
@@ -686,7 +691,8 @@ function processVLForm(data) {
     var REQUIRED_HEADERS = ["Timestamp","Email Address","LDAP","Role","Site","VL Start Date",
       "VL End Date","Days","VL Type","Reason","Supporting Docs","Support Coverage",
       "VL Credits Snip","BCP Email Subject","Month","Status","Comments",
-      "Confirmation on Status","Email Sent","Row UUID"];
+      "Confirmation on Status","Email Sent","Row UUID","VL Credits Source","VL Credits Accruals",
+      "BCP Notes","BCP Sent For","BCP Opened"];
     REQUIRED_HEADERS.forEach(function(h) { ensureColumn(sheet, h); });
 
     var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
@@ -714,20 +720,26 @@ function processVLForm(data) {
     setVal("Supporting Docs",        docsUrl);
     setVal("Support Coverage",       coverage.join(", "));
     setVal("VL Credits Snip",        creditsUrl);
-    setVal("BCP Email Subject",      _safeCell(bcpSubject, 300));
+    setVal("VL Credits Source",      creditsSource);
+    setVal("VL Credits Accruals",    creditsAccruals);
+    var bcpPlan = null;
+    try { bcpPlan = _bcpPlan(actor, "new", start, end, coverage); } catch (pe) { _log("WARN", "processVLForm", "BCP plan failed: " + pe.message); }
+    setVal("BCP Email Subject",      BCP_AUTO_COMPOSE ? (bcpPlan ? bcpPlan.subject : "") : _safeCell(bcpSubject, 300));
+    setVal("BCP Notes",              _safeCell(bcpNotes, 1000));
     setVal("Month",                  "'" + monthLabel(start));
     setVal("Status",                 "");
     setVal("Comments",               "");
     setVal("Confirmation on Status", "");
     setVal("Email Sent",             "");
-    setVal("Row UUID",               Utilities.getUuid());
+    var newUuid = Utilities.getUuid();
+    setVal("Row UUID",               newUuid);
 
     sheet.appendRow(newRow);
     _notifyNewVL({ email: actor.toLowerCase(), ldap: myLdap, site: config.site, role: config.role, start: start, end: end, days: numDays, vlType: vlType, reason: reason, coverage: coverage.join(", ") });
 
     CacheService.getScriptCache().remove("vl_events_cache");
     _log("INFO", "processVLForm", "Submission accepted", { ldap: myLdap, start: start, end: end, days: numDays });
-    return { status: "success" };
+    return { status: "success", uuid: newUuid, bcp: bcpPlan };
 
   } catch(e) {
     if (e.message && e.message.indexOf("timeout") >= 0) {
@@ -1648,19 +1660,30 @@ function syncApprovedVLToSchedule() {
     var data  = sheet.getRange(2, 1, lastRow - 1, lastCol).getValues();
     var tz    = Session.getScriptTimeZone();
     var today = Utilities.formatDate(new Date(), tz, "yyyy-MM-dd");
-    var jobs  = [];
+    var jobs  = [], approvedAll = {};
     for (var i = 0; i < data.length; i++) {
       var st = colMap["status"] !== undefined ? (data[i][colMap["status"]] || "").toString() : "";
       if (!VL_APPROVED_RX.test(st)) continue;
       var uuid = (data[i][colMap["rowuuid"]] || "").toString().trim();
       if (!uuid) continue;
+      approvedAll[uuid] = 1;
       var info = _vlInfoFromRow(data[i], colMap, uuid);
       if (!info || info.end < today) continue;
       jobs.push(info);
     }
+    // Anything previously written as "VL" whose request is no longer approved (denied / pending / removed) gets restored
+    var stale = [], seenU = {};
+    var logSh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(VL_SYNC_SHEET);
+    if (logSh && logSh.getLastRow() >= 2) {
+      logSh.getRange(2, 1, logSh.getLastRow() - 1, 7).getValues().forEach(function(lr) {
+        var u = (lr[0] || "").toString();
+        if (u && (lr[6] || "").toString() === "Applied" && !approvedAll[u] && !seenU[u]) { seenU[u] = 1; stale.push(u); }
+      });
+    }
+    var rv = _revertVLJobs(stale);
     var r = _applyVLJobs(jobs);
-    _log("INFO", "syncApprovedVLToSchedule", "Manual sync", { requests: jobs.length, applied: r.applied });
-    return { success: true, requests: jobs.length, applied: r.applied, skipped: r.skipped, noColumn: r.noColumn, noRow: r.noRow };
+    _log("INFO", "syncApprovedVLToSchedule", "Manual sync", { requests: jobs.length, applied: r.applied, restored: rv.restored });
+    return { success: true, requests: jobs.length, applied: r.applied, restored: rv.restored, skipped: r.skipped, noColumn: r.noColumn, noRow: r.noRow };
   } catch (e) {
     _log("ERROR", "syncApprovedVLToSchedule", e.message);
     return { success: false, message: "Server error: " + e.message };
@@ -1833,7 +1856,7 @@ function _cfgFlag(name, def) {
     var vals = getOrCreateConfigSheet().getRange("A2:B20").getValues();
     for (var i = 0; i < vals.length; i++) {
       if ((vals[i][0] || "").toString().trim() === name) {
-        var v = (vals[i][1] || "").toString().trim().toUpperCase();
+        var v = String(vals[i][1] == null ? "" : vals[i][1]).trim().toUpperCase();
         if (v === "TRUE") return true;
         if (v === "FALSE") return false;
       }
@@ -2307,5 +2330,115 @@ function _migrateOldVL(dry) {
     try { SpreadsheetApp.getUi().alert(msg); } catch (e) {}
   } finally {
     lock.releaseLock();
+  }
+}
+
+function onEdit(e) {
+  try {
+    if (e && e.range && e.range.getSheet().getName() === SCHED_SHEET_NAME) {
+      CacheService.getScriptCache().put("sched_ver", String(Date.now()), 21600);
+    }
+  } catch (err) {}
+}
+
+// ── BCP EMAIL PLAN ────────────────────────────────────
+// Keep BCP_TEST_MODE = true while testing: recipients become ONLY the sender.
+var BCP_TEST_MODE = true;
+
+// Master switch for the auto-compose BCP flow. Keep false until stakeholders approve.
+// (Also flip BCP_AUTO_COMPOSE in VLIndex.html.)
+var BCP_AUTO_COMPOSE = false;
+
+function _bcpPlan(actor, kind, start, end, coverage) {
+  var supData = getOrCreateSupervisorSheet().getDataRange().getValues();
+  var mySite = "", myRole = "", myNick = "", myLdap = actor.split("@")[0];
+  var nickByLdap = {};
+  for (var i = 1; i < supData.length; i++) {
+    var rNick  = (supData[i][0] || "").toString().trim();
+    var rEmail = (supData[i][1] || "").toString().trim().toLowerCase();
+    var rSite  = (supData[i][2] || "").toString().trim().toUpperCase();
+    var rLdap  = ((supData[i][3] || "").toString().trim().toLowerCase()) || rEmail.split("@")[0];
+    var rRole  = (supData[i][4] || "").toString().trim();
+    if (rLdap) nickByLdap[rLdap] = rNick ? (rNick + " (" + rLdap + ")") : rLdap;
+    if (rEmail === actor) { mySite = rSite; myRole = rRole; myNick = rNick || myLdap; myLdap = rLdap || myLdap; }
+  }
+  if (!mySite || !myRole) return null;
+
+  var toPeers = [], ccOps = [];
+  for (var j = 1; j < supData.length; j++) {
+    var email = (supData[j][1] || "").toString().trim().toLowerCase();
+    var site  = (supData[j][2] || "").toString().trim().toUpperCase();
+    var role  = (supData[j][4] || "").toString().trim();
+    if (!email) continue;
+    if (/^operations\s*manager$/i.test(role)) { if (ccOps.indexOf(email) < 0) ccOps.push(email); }
+    else if (site === mySite && email !== actor) { if (toPeers.indexOf(email) < 0) toPeers.push(email); }
+  }
+
+  var tag = kind === "cancel" ? "[BCP CANCELLED]" : (kind === "update" ? "[BCP UPDATE]" : "[BCP]");
+  var link = ""; try { link = ScriptApp.getService().getUrl(); } catch (e) {}
+  return {
+    email: actor, ldap: myLdap, nick: myNick, site: mySite, role: myRole,
+    subject: tag + " VL Coverage — " + myLdap + " (" + mySite + " · " + myRole + ") | " + _fmtMailRange(start, end),
+    to: BCP_TEST_MODE ? [actor] : toPeers,
+    cc: BCP_TEST_MODE ? [] : ccOps,
+    cov: (coverage || []).map(function(l) {
+      var c = l.toString().trim().toLowerCase();
+      return nickByLdap[c] || c;
+    }).join(", "),
+    appUrl: link,
+    testMode: BCP_TEST_MODE
+  };
+}
+
+function getBcpPlan(data) {
+  var actor = getSessionEmail().toLowerCase();
+  if (!actor) return { success: false, message: "Could not identify your account." };
+  if (!_checkRateLimit("bcpPlan_" + actor, 20, 60)) return { success: false, message: "Too many requests. Please wait a moment." };
+  try {
+    var start = (data.startDate || "").toString().trim();
+    var end   = (data.endDate   || "").toString().trim() || start;
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(start) || !/^\d{4}-\d{2}-\d{2}$/.test(end)) return { success: false, message: "Invalid dates." };
+    var kind = ["new", "update", "cancel"].indexOf(data.kind) >= 0 ? data.kind : "new";
+    var cov = (Array.isArray(data.coverage) ? data.coverage : []).map(function(c) {
+      return c.toString().trim().toLowerCase().replace(/[^a-z0-9._-]/g, "");
+    }).filter(Boolean);
+    var plan = _bcpPlan(actor, kind, start, end, cov);
+    if (!plan) return { success: false, message: "Your email was not found in the Roles tab." };
+    return { success: true, plan: plan };
+  } catch (e) {
+    _log("ERROR", "getBcpPlan", e.message);
+    return { success: false, message: "Could not prepare the BCP email: " + e.message };
+  }
+}
+
+function markBcpOpened(uuid, sentFor) {
+  var actor = getSessionEmail().toLowerCase();
+  uuid = (uuid || "").toString().trim();
+  if (!actor || !uuid) return { success: false };
+  var lock = LockService.getScriptLock();
+  try {
+    lock.waitLock(15000);
+    var sheet = getVLSheet();
+    ensureColumn(sheet, "BCP Sent For");
+    ensureColumn(sheet, "BCP Opened");
+    var data = sheet.getDataRange().getValues();
+    var norm = function(h) { return h.toString().replace(/[^a-zA-Z0-9]/g, "").toLowerCase(); };
+    var H = data[0].map(norm);
+    var cU = H.indexOf("rowuuid"), cE = H.indexOf("emailaddress"), cS = H.indexOf("bcpsentfor"), cO = H.indexOf("bcpopened");
+    if (cU < 0 || cE < 0 || cS < 0 || cO < 0) return { success: false };
+    for (var r = 1; r < data.length; r++) {
+      if ((data[r][cU] || "").toString() === uuid && (data[r][cE] || "").toString().toLowerCase() === actor) {
+        sheet.getRange(r + 1, cS + 1).setNumberFormat("@").setValue(_safeCell((sentFor || "").toString(), 40));
+        sheet.getRange(r + 1, cO + 1).setValue(new Date());
+        CacheService.getScriptCache().remove("vl_events_cache");
+        return { success: true };
+      }
+    }
+    return { success: false };
+  } catch (e) {
+    _log("WARN", "markBcpOpened", e.message);
+    return { success: false };
+  } finally {
+    try { lock.releaseLock(); } catch (x) {}
   }
 }
