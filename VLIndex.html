@@ -1960,13 +1960,14 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
   border-radius: var(--radius-sm);
 }
 .event {
-  background-color: color-mix(in srgb, var(--bg-surface) 20%, currentColor) !important;
+
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  color: var(--text-main);
+
 }
 .event:hover {
   transform: scale(1.02) translateY(-1px);
