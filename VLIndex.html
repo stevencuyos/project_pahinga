@@ -397,7 +397,7 @@
     @keyframes slideUp{from{transform:translateY(40px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
     .form-close-x{position:absolute;top:20px;right:20px;background:var(--bg-surface);border:1px solid var(--border-grid);width:40px;height:40px;border-radius:50%;color:var(--text-muted);font-size:24px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:20;transition:all 0.2s}
     .form-close-x:hover{background:var(--bg-cell-hover);color:var(--text-main)}
-    .original-form-card{background:var(--bg-surface);width:100%;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-float);color:var(--text-main);text-align:left;font-family:'Google Sans',Arial,sans-serif;border:1px solid var(--border-grid)}
+    .original-form-card{background:var(--bg-surface);width:100%;border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-float);color:var(--text-main);text-align:left;font-family:'Google Sans', sans-serif;border:1px solid var(--border-grid)}
     .header-svg-wrap{border-radius:var(--radius-xl) var(--radius-xl) 0 0;overflow:hidden;position:relative}
     .header-svg-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, transparent, rgba(0,0,0,0.1))}
     .original-form-card .info{background:var(--blue-bg);padding:16px 32px;font-size:14px;color:var(--blue-txt);line-height:1.5;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--blue-border)}
@@ -726,7 +726,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .sch-sub{font-size:12px;font-weight:500;color:var(--text-muted)}
 .sch-scroll{overflow:auto;max-height:440px}
 .sch-table{width:100%;border-collapse:separate;border-spacing:3px;font-size:12px}
-.sch-table th{font:600 11px 'Google Sans',sans-serif;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:6px 4px;position:sticky;top:0;background:var(--bg-surface);z-index:2}
+.sch-table th{font:600 11px 'Google Sans',sans-serif;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;text-align:center;padding:10px 4px;position:sticky;top:0;background:var(--bg-surface);z-index:4;box-shadow:0 1px 0 var(--border-light)}
 .sch-table td{padding:0}
 .sch-name{padding:4px 8px 4px 0!important;white-space:nowrap}
 .sch-st{text-align:center;font:700 11px 'Google Sans',sans-serif;color:var(--text-muted)}
@@ -760,7 +760,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .sch-table th{padding:5px 2px;line-height:1.2}
 .sch-table th span{display:block;font-weight:500;letter-spacing:0;text-transform:none;font-size:11px;margin-top:1px}
 .sch-table th.wk{color:var(--orange-main)}
-.sch-table th.td{color:var(--blue-main)}
+.sch-table th.td{color:var(--blue-main);background:var(--blue-bg);box-shadow:inset 0 -2px 0 var(--blue-main), 0 1px 0 var(--border-light)}
 .sch-who{display:flex;align-items:center;gap:8px}
 .sch-av{position:relative;flex:0 0 26px;width:26px;height:26px;border-radius:50%;overflow:hidden;background:var(--blue-bg);color:var(--blue-txt);display:flex;align-items:center;justify-content:center;font:700 11px 'Google Sans',sans-serif}
 .sch-av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -768,7 +768,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .sch-nm b{font-size:12.5px;color:var(--text-main)}
 .sch-nm i{font-style:normal;font-size:10.5px;color:var(--text-muted)}
 .sch-pill{display:inline-block;padding:2px 8px;border-radius:10px;background:var(--bg-cell-hover);font:700 10.5px 'Google Sans',sans-serif;color:var(--text-main)}
-.sch-c{height:34px;min-width:58px;cursor:pointer;position:relative;transition:transform .1s,box-shadow .1s}
+.sch-c{height:34px;min-width:58px;cursor:pointer;position:relative;transition:transform .1s,box-shadow .1s,background .2s}
 .sch-c:hover{transform:scale(1.04);box-shadow:var(--shadow-md);z-index:1}
 .sch-c.em{background:transparent;border:1px dashed var(--border-light)}
 .sch-c.nd{cursor:default;background:var(--bg-cell-hover);color:var(--text-muted);font-weight:400;opacity:.5}
@@ -857,7 +857,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 /* ── INSIGHTS v2 ── */
 .ac-insights{gap:16px}
 .ins-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.ins-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.ins-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
 .ins-kpi{background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:14px 16px}
 .ins-kl{font:700 10px 'Google Sans',sans-serif;text-transform:uppercase;letter-spacing:.6px;color:var(--text-muted)}
 .ins-kv{font:700 26px 'Google Sans Display','Google Sans',sans-serif;color:var(--text-title);margin-top:4px}
@@ -866,7 +866,7 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .ins-card{background:var(--bg-surface);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:18px 20px}
 .ins-t{font:600 15px 'Google Sans',sans-serif;color:var(--text-title);margin-bottom:14px}
 .ins-s{font-weight:400;font-size:12px;color:var(--text-muted);margin-left:6px}
-.ins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.ins-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;align-items:start}
 .ins-empty{padding:24px;text-align:center;color:var(--text-muted);font-size:13px}
 .ins-split{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--bg-cell-hover)}
 .ins-split span{display:block}
@@ -1076,15 +1076,15 @@ body{--field-border:color-mix(in srgb,var(--text-muted) 45%,transparent)}
 .pl-locks select{height:30px;border-radius:15px;border:1px solid var(--border-light);background:var(--bg-surface);color:var(--text-main);font:500 12px 'Google Sans',sans-serif;padding:0 10px}
 
 /* ── v7: sticky headers / frozen Support column ── */
-.sch-table td.sch-name{position:sticky;left:0;z-index:1;background:var(--bg-surface)}
-.sch-table th:first-child{position:sticky;left:0;z-index:3;background:var(--bg-surface)}
+.sch-table td.sch-name{position:sticky;left:0;z-index:2;background:var(--bg-surface);box-shadow:inset -1px 0 0 var(--border-light);transition:background .2s}
+.sch-table th:first-child{position:sticky;left:0;z-index:5;background:var(--bg-surface);box-shadow:inset -1px 0 0 var(--border-light), 0 1px 0 var(--border-light)}
 .sch-grp td:first-child{position:sticky;left:0;z-index:1}
 .sch-table tfoot{position:sticky;bottom:0;z-index:2}
-.sch-table tfoot td{background:var(--bg-surface)}
-.sch-table tfoot td.sch-lbl{position:sticky;left:0}
+.sch-table tfoot td{background:var(--bg-surface);box-shadow:inset 0 1px 0 var(--border-light)}
+.sch-table tfoot td.sch-lbl{position:sticky;left:0;box-shadow:inset -1px 0 0 var(--border-light)}
 
 /* ── v7: keyboard navigation ── */
-.sch-c.kcur{outline:2px solid var(--blue-main);outline-offset:-2px;box-shadow:0 0 0 3px var(--blue-bg)}
+.sch-c.kcur{outline:2px solid var(--blue-main);outline-offset:-2px;box-shadow:0 0 0 3px var(--blue-bg);z-index:3}
 .sch-keytip{display:none;position:fixed;z-index:4000;align-items:center;gap:10px;padding:6px 12px;border-radius:10px;background:var(--text-main);color:var(--bg-surface);font:600 12px 'Google Sans',sans-serif;box-shadow:var(--shadow-float);pointer-events:none;white-space:nowrap}
 .sch-keytip b{font:800 15px 'Google Sans Display','Google Sans',sans-serif}
 .sch-keytip span{opacity:.8;font-weight:500}
@@ -1097,7 +1097,8 @@ kbd{display:inline-block;min-width:22px;text-align:center;padding:2px 7px;margin
 
 /* ── v7: Pending Queue ── */
 .q-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
-.q-chip{font:700 10px 'Google Sans',sans-serif;padding:2px 8px;border-radius:9px;background:var(--bg-cell-hover);color:var(--text-muted);white-space:nowrap}
+.q-chip{font:700 10px 'Google Sans',sans-serif;padding:2px 8px;border-radius:9px;background:var(--bg-cell-hover);color:var(--text-muted);white-space:nowrap;transition:transform .2s,box-shadow .2s}
+.q-chip:hover{transform:translateY(-1px)}
 .q-chip.bad{background:var(--red-bg);color:var(--red-txt)}
 .q-chip.warn{background:var(--yellow-bg);color:var(--yellow-txt)}
 .q-chip.emg{background:var(--purple-bg);color:var(--purple-txt)}
@@ -1233,7 +1234,7 @@ header{border-bottom:none}
 .legend-item:has(input[value="Mental Wellness"]) .legend-dot{--dot-color:var(--purple-main)!important}
 .legend-item:has(input[value="Birthday"]) .legend-dot{--dot-color:var(--pink-main)!important}
 .legend-item:has(input[value="Medical"]) .legend-dot{--dot-color:var(--red-main)!important}
-.legend-item:has(input[value="Bereavement"]) .legend-dot{--dot-color:var(--neutral-main)!important}
+.legend-item:has(input[value="Broken Hearted"]) .legend-dot{--dot-color:var(--neutral-main)!important}
 .legend-item:has(input[value="Government / Legal"]) .legend-dot{--dot-color:var(--orange-main)!important}
 .legend-item:has(input[value="Moving House"]) .legend-dot{--dot-color:var(--blue-main)!important}
 
@@ -1267,7 +1268,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 .original-form-card input[type=text],.original-form-card input[type=date],.original-form-card input[type=url],.original-form-card input[type=number]{min-height:46px}
 .original-form-card input[type=text],.original-form-card input[type=date],.original-form-card input[type=url],.original-form-card input[type=number],.original-form-card .fb-textarea{
   border-width:1.5px;border-style:solid;border-radius:12px;padding:12px 14px;transition:border-color .15s,box-shadow .15s}
-.original-form-card input:focus,.original-form-card .fb-textarea:focus{border-color:var(--blue-main);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue-main) 18%,transparent)}
+.original-form-card input:focus,.original-form-card .fb-textarea:focus{border-color:var(--blue-main);box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-main) 30%,transparent)}
 .original-form-card .fb-textarea{resize:vertical;min-height:90px}
 .original-form-card input[type=date]::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.7;border-radius:6px;padding:2px}
 .original-form-card input[type=date]::-webkit-calendar-picker-indicator:hover{opacity:1;background:var(--bg-cell-hover)}
@@ -1277,7 +1278,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 .original-form-card .chip{display:inline-flex;align-items:center;padding:9px 16px;border-radius:999px;font-size:13px;transition:all .15s}
 .original-form-card .chip .material-symbols-rounded{margin-right:6px!important}
 .original-form-card .chip[class*=a-]{transform:translateY(-1px)}
-.original-form-card .chip[class*=a-]::after{content:'✓';margin-left:8px;font-weight:700;font-size:12px}
+.original-form-card .chip[class*=a-]::after{content:'\e5ca'; font-family: 'Material Symbols Rounded';margin-left:8px;font-weight:700;font-size:12px}
 
 /* ── Declaration ── */
 .original-form-card .decl-box{border-radius:14px;padding:14px 18px;gap:16px;border-style:dashed}
@@ -1303,7 +1304,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 #formModal .form-wrapper{max-width:1000px;animation:none}
 #formModal .pf-card{display:grid;grid-template-columns:292px minmax(0,1fr);border-radius:32px;overflow:clip;background:var(--bg-surface);
   border:1px solid color-mix(in srgb,var(--border-light) 60%,transparent);
-  box-shadow:0 0 0 .5px rgba(0,0,0,.05),0 32px 80px -12px rgba(0,0,0,.4);
+  box-shadow:0 8px 32px rgba(0,0,0,0.1),0 2px 8px rgba(0,0,0,0.05);
   animation:pfCard .55s cubic-bezier(.32,.72,0,1) backwards}
 #formModal .form-close-x{top:18px;right:18px;width:38px;height:38px;font-size:22px;z-index:30;
   background:color-mix(in srgb,var(--bg-surface) 85%,transparent);backdrop-filter:blur(10px);
@@ -1314,9 +1315,6 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 /* ── Left rail ── */
 #formModal .pf-rail{position:relative;border-right:1px solid color-mix(in srgb,var(--border-light) 60%,transparent);
   background:
-    radial-gradient(120% 55% at 0% 0%,color-mix(in srgb,var(--blue-main) 22%,transparent),transparent 60%),
-    radial-gradient(90% 45% at 100% 38%,color-mix(in srgb,var(--green-main) 14%,transparent),transparent 65%),
-    radial-gradient(100% 45% at 0% 100%,color-mix(in srgb,var(--yellow-main) 16%,transparent),transparent 65%),
     var(--bg-sidebar)}
 #formModal .pf-rail-in{position:sticky;top:0;display:flex;flex-direction:column;gap:26px;padding:30px 22px;max-height:100vh;overflow-y:auto;scrollbar-width:none}
 .pf-brand{display:flex;align-items:center;gap:12px}
@@ -1326,7 +1324,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 .pf-logo i:nth-child(3){background:#fbbc04}.pf-logo i:nth-child(4){background:#34a853}
 .pf-app{font:700 14px 'Google Sans',sans-serif;color:var(--text-title)}
 .pf-org{font-size:11.5px;color:var(--text-muted)}
-.pf-hero h2{font:700 30px/1.1 'Google Sans Display','Google Sans',sans-serif;letter-spacing:-.8px;color:var(--text-title)}
+.pf-hero h2{font:700 32px/1.2 'Google Sans Display','Google Sans',sans-serif;letter-spacing:-.8px;color:var(--text-title)}
 .pf-hero p{margin-top:6px;font-size:13px;color:var(--text-muted)}
 .pf-prog{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:18px;
   background:color-mix(in srgb,var(--bg-surface) 72%,transparent);backdrop-filter:blur(8px);
@@ -1343,8 +1341,8 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
   border-radius:14px;cursor:pointer;text-align:left;color:var(--text-main);font-family:inherit;transition:background .2s,box-shadow .2s}
 .pf-step:hover{background:color-mix(in srgb,var(--bg-surface) 65%,transparent)}
 .pf-step.cur{background:var(--bg-surface);box-shadow:var(--shadow-sm)}
-.pf-dot{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font:700 11.5px 'Google Sans',sans-serif;font-style:normal;
-  color:var(--text-muted);border:1.5px solid var(--border-light);transition:all .25s}
+.pf-dot{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font:700 12px 'Google Sans',sans-serif;font-style:normal;
+  color:var(--text-muted);border:1.5px solid color-mix(in srgb, var(--border-light) 70%, transparent);transition:all .25s}
 .pf-dot::before{content:counter(st)}
 #formModal .pf-dot .material-symbols-rounded{display:none;font-size:16px}
 .pf-step.cur .pf-dot{border-color:var(--blue-main);color:var(--blue-main)}
@@ -1373,8 +1371,8 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 .pf-sec>header::before{content:"0" counter(ps);display:block;margin-bottom:4px;font:700 11px 'Google Sans',sans-serif;letter-spacing:1.4px;color:var(--blue-main)}
 .pf-sec>header h3{font:700 20px/1.2 'Google Sans Display','Google Sans',sans-serif;letter-spacing:-.3px;color:var(--text-title)}
 .pf-sec>header p{margin-top:3px;font-size:13px;color:var(--text-muted)}
-.pf-body{padding:20px;border-radius:22px;border:1px solid color-mix(in srgb,var(--border-light) 55%,transparent);
-  background:color-mix(in srgb,var(--bg-cell-hover) 55%,var(--bg-surface));transition:border-color .25s,box-shadow .25s}
+.pf-body{padding:24px;border-radius:24px;border:1px solid color-mix(in srgb,var(--border-light) 40%,transparent);
+  background:var(--bg-surface);box-shadow:0 2px 12px rgba(0,0,0,0.03);transition:border-color .25s,box-shadow .25s}
 .pf-sec:focus-within .pf-body{border-color:color-mix(in srgb,var(--blue-main) 40%,transparent);box-shadow:0 0 0 4px color-mix(in srgb,var(--blue-main) 8%,transparent)}
 .pf-body>.f:last-child,.pf-body .two .f{margin-bottom:0}
 .pf-body .ca{margin-top:14px}
@@ -1412,7 +1410,7 @@ body.theme-slate-dark .original-form-card,body.theme-warm-dark .original-form-ca
 #formModal #rsGrp .chip.a-red{transform:translateY(-2px);background:var(--red-bg);border-color:var(--red-main);color:var(--red-txt);box-shadow:0 10px 22px -10px color-mix(in srgb,var(--red-main) 60%,transparent)}
 #formModal #rsGrp .chip.a-blue .material-symbols-rounded{color:var(--blue-main);transform:scale(1.15)}
 #formModal #rsGrp .chip.a-red .material-symbols-rounded{color:var(--red-main);transform:scale(1.15)}
-#formModal #rsGrp .chip[class*=a-]::after{content:'✓';position:absolute;top:8px;right:8px;width:18px;height:18px;margin:0;border-radius:50%;
+#formModal #rsGrp .chip[class*=a-]::after{content:'\e5ca'; font-family: 'Material Symbols Rounded';position:absolute;top:8px;right:8px;width:18px;height:18px;margin:0;border-radius:50%;
   display:grid;place-items:center;font:700 11px/1 'Google Sans',sans-serif;color:var(--bg-surface);background:var(--blue-main);animation:pfPop .35s cubic-bezier(.34,1.56,.64,1)}
 #formModal #rsGrp .chip.a-red::after{background:var(--red-main)}
 
@@ -1620,7 +1618,8 @@ header{background:color-mix(in srgb,var(--bg-header) 78%,transparent);backdrop-f
 .ac-wg-chip:has(input:checked){background:var(--blue-bg);color:var(--blue-txt);border-color:var(--blue-main);box-shadow:0 4px 12px -4px color-mix(in srgb,var(--blue-main) 45%,transparent)}
 .sch-minbtn,.sch-today,.sch-btn,.sch-all{transition:transform .25s cubic-bezier(.34,1.56,.64,1),box-shadow .25s,background .2s}
 .sch-minbtn:hover,.sch-today:hover,.sch-btn:hover,.sch-all:hover{transform:translateY(-1px);box-shadow:var(--shadow-sm)}
-.q-chip{border-radius:999px;padding:3px 10px}
+.q-chip{border-radius:999px;padding:3px 10px;transition:transform .2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow .2s, filter .2s}
+.q-chip:hover{transform:translateY(-1px);filter:brightness(1.05)}
 
 /* Pending queue: row cards */
 #adminQueueList{padding:4px 32px 110px}
@@ -1679,7 +1678,7 @@ header{background:color-mix(in srgb,var(--bg-header) 78%,transparent);backdrop-f
 .sch-card{border-radius:24px;padding:18px;background:color-mix(in srgb,var(--bg-surface) 92%,transparent);box-shadow:0 8px 30px -14px rgba(0,0,0,.18);animation:acRise .6s cubic-bezier(.32,.72,0,1) backwards .1s}
 .sch-title{font:600 16px 'Google Sans Display','Google Sans',sans-serif;letter-spacing:-.2px}
 .sch-table th{backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg-surface) 88%,transparent)}
-.sch-c{border-radius:10px;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,filter .2s}
+.sch-c{border-radius:10px;transition:transform .2s cubic-bezier(.34,1.56,.64,1),box-shadow .2s,filter .2s,background .25s ease}
 .sch-c:hover{transform:scale(1.07);box-shadow:0 8px 18px -6px rgba(0,0,0,.3);z-index:2}
 .sch-c.t{box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 12%,transparent)}
 .sch-c.kcur{box-shadow:0 0 0 3px color-mix(in srgb,var(--blue-main) 30%,transparent)}
@@ -1698,7 +1697,7 @@ header{background:color-mix(in srgb,var(--bg-header) 78%,transparent);backdrop-f
 /* Insights */
 .ac-insights{padding:20px 32px 60px;gap:20px}
 .ins-bar{padding:4px 0}
-.ins-kpis{gap:14px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.ins-kpis{gap:14px;grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
 .ins-kpi{position:relative;overflow:hidden;border-radius:22px;padding:18px 20px;background:color-mix(in srgb,var(--bg-surface) 92%,transparent);
   animation:acRise .6s cubic-bezier(.32,.72,0,1) backwards;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .25s}
 .ins-kpi::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--blue-main),var(--green-main));opacity:.75}
@@ -1712,7 +1711,7 @@ header{background:color-mix(in srgb,var(--bg-header) 78%,transparent);backdrop-f
 .ins-card{border-radius:26px;padding:22px 24px;background:color-mix(in srgb,var(--bg-surface) 92%,transparent);
   box-shadow:0 8px 30px -14px rgba(0,0,0,.18);animation:acRise .65s cubic-bezier(.32,.72,0,1) backwards .15s;transition:box-shadow .25s,transform .3s cubic-bezier(.34,1.56,.64,1)}
 .ins-card:hover{box-shadow:0 18px 40px -16px rgba(0,0,0,.28)}
-.ins-grid{gap:18px;grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.ins-grid{gap:18px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));align-items:start}
 .ins-t{font:600 16px 'Google Sans Display','Google Sans',sans-serif;letter-spacing:-.2px}
 .ins-chart{height:190px;gap:10px;padding:12px 4px 4px;align-items:flex-end}
 .ins-col{max-width:none;flex:1 1 0;min-width:18px;height:100%;justify-content:flex-end;transition:transform .25s cubic-bezier(.34,1.56,.64,1)}
@@ -1949,6 +1948,97 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
 /* day-level removal chips */
 .od-lbl{display:inline-flex;align-items:center;gap:5px;user-select:none}
 .od-lbl.dis{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+
+/* UI Micro-interactions & Polish injected */
+.cell {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cell:hover {
+  transform: scale(1.01) translateY(-2px);
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-sm);
+}
+.event {
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+}
+.event:hover {
+  transform: scale(1.02) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  filter: brightness(1.05);
+}
+body.dark-mode .event:hover {
+  filter: brightness(1.2);
+}
+/* Calendar wrapper animation */
+.cal-wrapper {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+.cal-wrapper.fading {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+
+/* Premium Theme Enhancements */
+body.theme-slate-dark {
+  --bg-page: #0F1219;
+  --bg-surface: #181C26;
+  --bg-sidebar: #13171F;
+}
+body.theme-graphite-dark {
+  --bg-page: #141310;
+  --bg-surface: #1E1D19;
+  --bg-sidebar: #191815;
+}
+body.theme-warm-dark {
+  --bg-page: #171412;
+  --bg-surface: #221D1A;
+  --bg-sidebar: #1D1815;
+}
+
+
+/* Skeleton Polish */
+@keyframes shimmerWave {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.sk {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--text-main) 5%, transparent) 25%,
+    color-mix(in srgb, var(--text-main) 15%, transparent) 50%,
+    color-mix(in srgb, var(--text-main) 5%, transparent) 75%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: shimmerWave 2s infinite linear !important;
+  border-radius: var(--radius-md) !important;
+}
+
+
+/* Mini Progress Bars for Stats */
+.sb-bar-bg {
+  width: 100%;
+  height: 4px;
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.sb-bar-fill {
+  height: 100%;
+  background: currentColor;
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 </style>
 </head>
 <body>
@@ -2038,7 +2128,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
         <label class="legend-item"><input type="checkbox" checked value="Mental Wellness" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--purple-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">self_improvement</span>Mental Wellness</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Birthday" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--pink-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">cake</span>Birthday</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Medical" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--red-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">medical_services</span>Medical</span></label>
-        <label class="legend-item"><input type="checkbox" checked value="Bereavement" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--neutral-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">favorite</span>Bereavement</span></label>
+        <label class="legend-item"><input type="checkbox" checked value="Broken Hearted" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--neutral-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">favorite</span>Broken Hearted</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Government / Legal" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--orange-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">gavel</span>Gov / Legal</span></label>
         <label class="legend-item"><input type="checkbox" checked value="Moving House" class="rs-filter"><div class="legend-dot" style="--dot-color:var(--blue-main)"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><span class="lbl"><span class="material-symbols-rounded" style="font-size:18px;vertical-align:middle;margin-right:4px">local_shipping</span>Moving House</span></label>
       </div>
@@ -2057,7 +2147,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
   <main class="calendar-wrapper" id="calendarWrapper">
     <div class="calendar-surface" id="calendarSurface">
       <div class="days-header"><div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div><div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div></div>
-      <div class="grid" id="calGrid"></div>
+      <div class="grid cal-wrapper" id="calGrid"></div>
     </div>
   </main>
 
@@ -2097,12 +2187,12 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
     <div class="drawer-hero">
       <button class="drawer-close" onclick="closeDrawer()">×</button>
       <div class="dh-avatar" id="drawerAvatar">?</div>
-      <div class="dh-name" id="drawerName">Loading...</div>
-      <div class="dh-email" id="drawerEmail">Loading...</div>
+      <div class="dh-name" id="drawerName"><div class="sk" style="width:120px;height:24px;border-radius:4px"></div></div>
+      <div class="dh-email" id="drawerEmail"><div class="sk" style="width:160px;height:14px;border-radius:4px"></div></div>
       <div class="quick-stats">
-        <div class="stat-box sb-appr"><div class="sb-num" id="statAppr">0</div><div class="sb-lbl">Approved</div></div>
-        <div class="stat-box sb-pend"><div class="sb-num" id="statPend">0</div><div class="sb-lbl">Pending</div></div>
-        <div class="stat-box sb-den"><div class="sb-num" id="statDen">0</div><div class="sb-lbl">Rejected</div></div>
+        <div class="stat-box sb-appr"><div class="sb-num" id="statAppr">0</div><div class="sb-lbl">Approved</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barAppr" style="width:0%"></div></div></div>
+        <div class="stat-box sb-pend"><div class="sb-num" id="statPend">0</div><div class="sb-lbl">Pending</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barPend" style="width:0%"></div></div></div>
+        <div class="stat-box sb-den"><div class="sb-num" id="statDen">0</div><div class="sb-lbl">Rejected</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barDen" style="width:0%"></div></div></div>
       </div>
     </div>
     <div class="drawer-tabs" id="drawerSupTabs" style="display:none">
@@ -2448,7 +2538,7 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
                 <div class="chip" data-val="Mental Wellness" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">self_improvement</span>Mental Wellness</div>
                 <div class="chip" data-val="Birthday" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">cake</span>Birthday</div>
                 <div class="chip" data-val="Medical" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">medical_services</span>Medical</div>
-                <div class="chip" data-val="Bereavement" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">favorite</span>Bereavement</div>
+                <div class="chip" data-val="Broken Hearted" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">favorite</span>Broken Hearted</div>
                 <div class="chip" data-val="Government / Legal" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">gavel</span>Government / Legal</div>
                 <div class="chip" data-val="Moving House" onclick="pickChip(this,'rsGrp','blue','rsVal')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' ')pickChip(this,'rsGrp','blue','rsVal')"><span class="material-symbols-rounded">local_shipping</span>Moving House</div>
               </div>
@@ -2474,6 +2564,11 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
               <div class="ldap-box" id="covBox">
                 <input type="text" id="covInput" placeholder="Search by LDAP or nickname…" autocomplete="off" oninput="covSearch(this.value)" onfocus="covSearch(this.value)" onblur="setTimeout(function(){document.getElementById('covList').classList.remove('on')},200)">
                 <div class="ldap-list" id="covList"></div>
+              <div id="covSuggestWrap" style="margin-top:12px;display:none;">
+                <div style="font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">Suggested for you</div>
+                <div class="chips" id="covSuggestChips" style="gap:6px;"></div>
+              </div>
+
               </div>
               <div class="chips" id="covChips" style="margin-top:8px"></div>
               <div class="ca ca-e" id="covWarn"></div>
@@ -2566,7 +2661,7 @@ let poOvTimer=null;
 // QoL #1: LDAP dropdown keyboard nav state
 let _ldapFocusIdx=-1;
 
-const reasonIcons={"Out of Town / Vacation":"flight","Personal":"person","Family Gathering":"home","Emergency":"emergency","Mental Wellness":"self_improvement","Birthday":"cake","Medical":"medical_services","Bereavement":"favorite","Government / Legal":"gavel","Moving House":"local_shipping"};
+const reasonIcons={"Out of Town / Vacation":"flight","Personal":"person","Family Gathering":"home","Emergency":"emergency","Mental Wellness":"self_improvement","Birthday":"cake","Medical":"medical_services","Broken Hearted":"favorite","Government / Legal":"gavel","Moving House":"local_shipping"};
 
 const HOLIDAYS_2026 = {
   "2026-01-01": "New Year's Day",
@@ -3460,7 +3555,7 @@ function bcpViewLine(e){
   if(denied){if(e.bcpSentFor&&e.bcpSentFor!=='CANCELLED'){kind='cancel';label='Send BCP cancellation'}}
   else if(!e.bcpSentFor){kind='new';label='Open BCP email in Gmail'}
   else if(e.bcpSentFor!==sd+'|'+ed){kind='update';label='Send BCP update (dates changed)'}
-  else out+='<br><span style="font-weight:600;color:var(--green-txt)">✓ BCP opened for these dates</span>';
+  else out+='<br><span style="font-weight:600;color:var(--green-txt)"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">check</span> BCP opened for these dates</span>';
   if(kind){
     _bcpViewEv=e;_bcpViewKind=kind;
     out+='<br><a href="#" onclick="bcpFromView();return false" style="color:var(--blue-main);font-weight:600;text-decoration:none">✉ '+label+'</a>';
@@ -4189,7 +4284,7 @@ function renderSchedules(){
       '<span class="'+(bad?'lowc':'')+'" title="Lowest hourly headcount">Low '+low+'</span>'+
       (a?'<span class="a" title="Approved VL">'+a+' VL</span>':'')+
       (pp?'<span class="p" title="Pending VL">'+pp+' pend</span>':'')+
-      (x?'<span class="x" title="Approved VL but still scheduled to work">⚠ '+x+'</span>':'')+
+      (x?'<span class="x" title="Approved VL but still scheduled to work"><span class="material-symbols-rounded" style="font-size:14px;vertical-align:text-bottom">warning</span> '+x+'</span>':'')+
     '</div></div>';
   }).join('')+'</div>';
 
@@ -5748,7 +5843,7 @@ function renderAdminQueue(skipDropdownRebuild){
     html+='<td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+icon+_escHtml(typeTxt)+'</td>';
     html+='<td class="sticky-col" style="text-align:right;white-space:nowrap"><div style="display:flex;align-items:center;justify-content:flex-end;gap:5px">';
     html+='<input type="text" id="'+cid+'" placeholder="Note..." style="width:110px;padding:5px 8px;border:1px solid var(--border-light);border-radius:6px;font-size:11.5px;font-family:\'Google Sans\',sans-serif;outline:none;background:var(--bg-surface);color:var(--text-main)">';
-    html+='<button class="ac-act-btn btn-appr" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'Approved\',this,\''+cid+'\')">✓ Approve</button>';
+    html+='<button class="ac-act-btn btn-appr" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'Approved\',this,\''+cid+'\')"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">check</span> Approve</button>';
     html+='<button class="ac-act-btn btn-deny" onclick="setRequestStatus(\''+e.id+'\',\''+safe+'\',\'Denied\',this,\''+cid+'\')">✕ Deny</button>';
     html+='</div></td></tr>';
   });
@@ -5788,9 +5883,6 @@ function doBatchAction(status){
   var selected = Array.from(document.querySelectorAll('.ac-row-check:checked')).map(c => c.value);
   if(selected.length === 0) return;
   var risky=selected.filter(function(id){var r=_imp.res[id];return r&&r.state==='bad'}).length;
-  var bmsg=(status==='Approved'&&risky)
-    ?'⚠ '+risky+' of the '+selected.length+' selected request(s) would each drop a site below its minimum (checked one at a time — the combined effect may be worse).\n\nApprove all '+selected.length+' anyway?'
-    :'Apply "'+status+'" to '+selected.length+' selected requests?';
   var bTitle=(status==='Approved'&&risky)?'Approve despite coverage warnings?':'Apply "'+status+'" to '+selected.length+' request'+(selected.length===1?'':'s')+'?';
   uiConfirm({title:bTitle,icon:(status==='Approved'&&risky)?'warning':'task_alt',tone:(status==='Approved'&&risky)?'amber':(status==='Denied'?'red':'blue'),ok:status==='Approved'?'Approve':(status==='Denied'?'Deny':'Apply'),
     html:(status==='Approved'&&risky)
@@ -5905,6 +5997,11 @@ function renderUserRequests(){
   document.getElementById('statAppr').innerText=appr;
   document.getElementById('statPend').innerText=pend;
   document.getElementById('statDen').innerText=den;
+  var tot=appr+pend+den;
+  var ba=document.getElementById('barAppr'),bp=document.getElementById('barPend'),bd=document.getElementById('barDen');
+  if(ba)ba.style.width=(tot?appr/tot*100:0)+'%';
+  if(bp)bp.style.width=(tot?pend/tot*100:0)+'%';
+  if(bd)bd.style.width=(tot?den/tot*100:0)+'%';
   if(!myEvents.length){
     list.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/><path d="M7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg><p>No requests found for this month.</p></div>';
     return;
@@ -5919,13 +6016,13 @@ function renderUserRequests(){
     var iconHtml='<span class="material-symbols-rounded" style="font-size:16px;vertical-align:middle;margin-right:4px">'+(reasonIcons[typeTxt]||'calendar_today')+'</span>';
     var avatar=team?'<img src="'+getMomaPhoto(e.ldap)+'" onerror="this.style.display=\'none\'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;border:1px solid var(--border-light)">':'';
     var docs='';
-    if(okUrl(e.creditsUrl))docs+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="'+linkStyle+'">📸 VL credits snip</a>';
-    if(okUrl(e.docsUrl))docs+=(docs?' &nbsp;·&nbsp; ':'')+'<a href="'+_escHtml(e.docsUrl)+'" target="_blank" rel="noopener" style="'+linkStyle+'">📄 Supporting doc</a>';
+    if(okUrl(e.creditsUrl))docs+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="'+linkStyle+'"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">photo_camera</span> VL credits snip</a>';
+    if(okUrl(e.docsUrl))docs+=(docs?' &nbsp;·&nbsp; ':'')+'<a href="'+_escHtml(e.docsUrl)+'" target="_blank" rel="noopener" style="'+linkStyle+'"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">description</span> Supporting doc</a>';
 
     var actions='<div style="display:flex;gap:8px;margin-top:16px;"><button class="ac-act-btn" style="background:var(--bg-cell-hover);color:var(--text-main);flex:1;padding:6px;font-size:11px;" onclick="jumpToDate(\''+sd+'\')"><span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle;margin-right:4px">location_on</span> View on Cal</button>';
     if(!team&&stat.key==='pending')actions+='<button class="ac-act-btn" style="background:var(--red-bg);color:var(--red-main);flex:1;padding:6px;font-size:11px;" onclick="cancelRequestFromDrawer(\''+e.id+'\',\''+sd+'\')">✕ Cancel</button>';
     else if(team&&stat.key==='pending'){
-      actions+='<button class="ac-act-btn btn-appr" style="flex:1;padding:6px;font-size:11px;" onclick="quickAdminAction(\''+e.id+'\',\'Approved\',this)">✓ Approve</button>';
+      actions+='<button class="ac-act-btn btn-appr" style="flex:1;padding:6px;font-size:11px;" onclick="quickAdminAction(\''+e.id+'\',\'Approved\',this)"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">check</span> Approve</button>';
       actions+='<button class="ac-act-btn btn-deny" style="flex:1;padding:6px;font-size:11px;" onclick="quickAdminAction(\''+e.id+'\',\'Denied\',this)">✕ Deny</button>';
     }
     actions+='</div>';
@@ -5952,7 +6049,7 @@ function renderUserRequests(){
 function goToday(){currentDate=new Date();renderCalendar()}
 
 /* QoL #15: slide month title animation */
-function changeMonth(dir){
+function changeMonth(dir){var w=document.querySelector('.cal-wrapper');if(w)w.classList.add('fading');
   var title=document.getElementById('monthDisplay');
   title.classList.add('slide-out');
   setTimeout(function(){
@@ -5961,7 +6058,7 @@ function changeMonth(dir){
     title.classList.remove('slide-in');
     void title.offsetWidth;
     title.classList.add('slide-in');
-    renderCalendar();
+    renderCalendar();if(w)w.classList.remove('fading');
     setTimeout(function(){title.classList.remove('slide-in')},200);
   },130);
 }
@@ -6188,8 +6285,8 @@ function openViewModal(ev,targetId,clickedDate){
 
   var okUrl=function(u){return u&&/^https?:\/\//i.test(u)};
   var links='';
-  if(okUrl(e.creditsUrl))links+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none">📸 VL credits snip'+(e.creditsSource?' ('+_escHtml(e.creditsSource)+')':'')+'</a>'+(e.creditsAccruals?'<span style="font-weight:400;color:var(--text-muted)"> · '+_escHtml(e.creditsAccruals)+' accruals</span>':'');
-  if(okUrl(e.docsUrl))links+=(links?' &nbsp;·&nbsp; ':'')+'<a href="'+_escHtml(e.docsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none">📄 Supporting doc</a>';
+  if(okUrl(e.creditsUrl))links+='<a href="'+_escHtml(e.creditsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">photo_camera</span> VL credits snip'+(e.creditsSource?' ('+_escHtml(e.creditsSource)+')':'')+'</a>'+(e.creditsAccruals?'<span style="font-weight:400;color:var(--text-muted)"> · '+_escHtml(e.creditsAccruals)+' accruals</span>':'');
+  if(okUrl(e.docsUrl))links+=(links?' &nbsp;·&nbsp; ':'')+'<a href="'+_escHtml(e.docsUrl)+'" target="_blank" rel="noopener" style="color:var(--blue-main);font-weight:600;text-decoration:none"><span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">description</span> Supporting doc</a>';
   var _bl=bcpViewLine(e);if(_bl)links+=(links?'<br>':'')+_bl;
   box('viewModalLinksBox',!!links);
   document.getElementById('viewModalLinks').innerHTML=links;
@@ -6270,12 +6367,14 @@ function refreshDateInfo(){
   ok.className='ca ca-ok';
   document.getElementById('peerBlock').classList.remove('on');
   var _ow=document.getElementById('offWarn');if(_ow)_ow.classList.remove('on');
-  if(!s||!e){checkCoverageConflicts();return}
+  if(!s||!e){checkCoverageConflicts();
+  if (typeof renderCovSuggestions === 'function') renderCovSuggestions();return}
   if(e<s){ok.className='ca ca-e on';ok.textContent='End date is before the start date.';return}
   var n=dayCount(s,e);
   ok.className='ca ca-ok on';
-  ok.textContent='✓ '+n+' day'+(n>1?'s':'')+': '+s+(n>1?' to '+e:'');
+  ok.innerHTML='<span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom">check</span> '+n+' day'+(n>1?'s':'')+': '+s+(n>1?' to '+e:'');
   updatePeerVisibility(s,e);
+  if (typeof renderCovSuggestions === 'function') renderCovSuggestions();
   checkCoverageConflicts();
   checkOffDays(s,e);
   saveDraft();
@@ -6301,7 +6400,7 @@ function checkOffDays(s,e){
     });
     if(!off.length)return;
     var all=(off.length===plotted);
-    el.innerHTML='⚠ '+(all?'Every scheduled day in this request':'<b>'+off.length+' day'+(off.length===1?'':'s')+'</b> in this request')+' is your <b>OFF day</b> per the published schedule: <b>'+_escHtml(_odList(off))+'</b>. '+(all?'You may not need VL for these dates.':'You may not need VL for those days.')+' Double-check your dates before submitting.';
+    el.innerHTML='<span class="material-symbols-rounded" style="font-size:14px;vertical-align:text-bottom">warning</span> '+(all?'Every scheduled day in this request':'<b>'+off.length+' day'+(off.length===1?'':'s')+'</b> in this request')+' is your <b>OFF day</b> per the published schedule: <b>'+_escHtml(_odList(off))+'</b>. '+(all?'You may not need VL for these dates.':'You may not need VL for those days.')+' Double-check your dates before submitting.';
     el.classList.add('on');
   };
   if(hit&&Date.now()-hit.t<60000){show(hit.res);return}
@@ -6313,6 +6412,47 @@ function checkOffDays(s,e){
     .getMyScheduleView(s,e);
 }
 var _covSel=[];
+
+function renderCovSuggestions(){
+  var wrap=document.getElementById('covSuggestWrap'), chips=document.getElementById('covSuggestChips');
+  if(!wrap || !chips) return;
+
+  var s=document.getElementById('vlDate').value, e=document.getElementById('vlEnd').value||s;
+  var me=(window.myLdap||'').toLowerCase();
+
+  if(!s || !window.mySite || !window.roster){
+    wrap.style.display='none';
+    return;
+  }
+
+  // Find people at same site, not me, not already picked
+  var available = window.roster.filter(function(p){
+    if(p.site !== window.mySite || p.ldap === me || _covSel.indexOf(p.ldap) >= 0) return false;
+
+    // Check if they are on leave during these dates
+    var clash = serverEvents.some(function(ev){
+      return ev.ldap.toLowerCase() === p.ldap && ev.date >= s && ev.date <= e && getStatProps(ev.status).key !== 'rejected';
+    });
+    return !clash;
+  });
+
+  // Sort them so it's consistent
+  available.sort(function(a,b){return a.ldap.localeCompare(b.ldap);});
+
+  // Take top 5
+  var suggestions = available.slice(0, 5);
+
+  if(suggestions.length > 0){
+    chips.innerHTML = suggestions.map(function(p){
+      return '<div class="chip" style="padding:4px 10px 4px 4px;font-size:12px;" onclick="addCoverage(\'' + p.ldap + '\')">' +
+             avatarHtml(p.ldap,'sm') + '<span style="margin-left:6px">' + p.ldap + '</span></div>';
+    }).join('');
+    wrap.style.display='block';
+  } else {
+    wrap.style.display='none';
+  }
+}
+
 function covSearch(q){
   var list=document.getElementById('covList');
   var me=(window.myLdap||'').toLowerCase();
@@ -6367,9 +6507,9 @@ function addCoverage(l){
   document.getElementById('covInput').value='';
   document.getElementById('covList').classList.remove('on');
   document.getElementById('covBox').classList.remove('field-error');
-  renderCovChips();saveDraft();
+  renderCovChips();saveDraft();if (typeof renderCovSuggestions === 'function') renderCovSuggestions();
 }
-function removeCoverage(l){_covSel=_covSel.filter(function(x){return x!==l});renderCovChips();saveDraft()}
+function removeCoverage(l){_covSel=_covSel.filter(function(x){return x!==l});renderCovChips();saveDraft();if (typeof renderCovSuggestions === 'function') renderCovSuggestions();}
 function renderCovChips(){
   document.getElementById('covChips').innerHTML=_covSel.map(function(l){
     var p=(window.roster||[]).find(function(x){return x.ldap===l})||{};
@@ -6390,7 +6530,7 @@ function checkCoverageConflicts(){
     var clash=serverEvents.filter(function(ev){return ev.ldap.toLowerCase()===l&&ev.date>=s&&ev.date<=e&&getStatProps(ev.status).key!=='rejected'});
     if(clash.length)msgs.push(l+' is also on VL ('+clash[0].date+(clash.length>1?' +'+(clash.length-1)+' more day(s)':'')+')');
   });
-  if(msgs.length){warn.innerHTML='⚠ '+msgs.join('<br>⚠ ');warn.classList.add('on')}
+  if(msgs.length){warn.innerHTML='<span class="material-symbols-rounded" style="font-size:14px;vertical-align:text-bottom">warning</span> '+msgs.join('<br><span class="material-symbols-rounded" style="font-size:14px;vertical-align:text-bottom">warning</span> ');warn.classList.add('on')}
 }
 function resetFormFields(){
   clearFieldErrors();
@@ -6525,7 +6665,7 @@ function clientValidate(d){
 function openConfirm(){
   document.getElementById('errMsg').style.display='none';
   clearFieldErrors();
-  var d=collectData();var err=clientValidate(d);if(err){showErr('❌ '+err);return}_pendingData=d;
+  var d=collectData();var err=clientValidate(d);if(err){showErr('<span class="material-symbols-rounded" style="font-size:18px;vertical-align:text-bottom;margin-right:4px">error</span> '+err);return}_pendingData=d;
   var n=dayCount(d.startDate,d.endDate);
   var rows=[['Filing as',(window.myLdap||'')+' · '+window.myRole],['Site',window.mySite||'—'],['Dates',d.startDate+(n>1?' to '+d.endDate:'')+' ('+n+' day'+(n>1?'s':'')+')'],['VL Type',formatReason(d.vlType)],['Reason',_escHtml(d.reason)],['Coverage',_escHtml(d.coverage.join(', '))],['VL accruals',_escHtml(d.creditsAccruals)+' ('+crSource()+')'],BCP_AUTO_COMPOSE?['BCP email','Opens in your Gmail right after you submit']:['BCP subject',_escHtml(d.bcpSubject)]];
   document.getElementById('cnfRows').innerHTML=rows.map(function(r){return'<div class="crow"><span class="cl">'+r[0]+'</span><span class="cv">'+(r[1]||'—')+'</span></div>'}).join('');
@@ -6567,7 +6707,7 @@ function submitForm(){
         document.getElementById('sucTitle').textContent='Application Submitted!';
         document.getElementById('sucTxt').textContent='Your leave request has been logged. You\'ll be notified once reviewed.';
         document.getElementById('sucDet').innerHTML='<strong>'+(window.myLdap||'')+' — '+_pendingData.startDate+(_pendingData.endDate&&_pendingData.endDate!==_pendingData.startDate?' to '+_pendingData.endDate:'')+'</strong><br>'+window.myRole+' · '+formatReason(_pendingData.vlType)+' · '+(window.mySite||'');
-        document.getElementById('sucEmail').textContent='📧 A confirmation will be sent once your request is reviewed.';
+        document.getElementById('sucEmail').innerHTML='<span class="material-symbols-rounded" style="font-size:16px;vertical-align:text-bottom;margin-right:4px">email</span>A confirmation will be sent once your request is reviewed.';
         var _sb=document.getElementById('sucBcp');
         if(BCP_AUTO_COMPOSE&&res.bcp){
           _bcpLast={p:res.bcp,uuid:res.uuid,f:{kind:'new',startDate:_pendingData.startDate,endDate:_pendingData.endDate||_pendingData.startDate,vlType:_pendingData.vlType,docsUrl:_pendingData.docsUrl,notes:_pendingData.bcpNotes||''}};
@@ -6576,11 +6716,11 @@ function submitForm(){
         }else _sb.style.display='none';
         document.getElementById('sucOv').classList.add('on');
         clearDraft();
-      }else showErr('❌ <strong>Error:</strong> '+(res.message||'Unknown error. Please try again.'));
+      }else showErr('<span class="material-symbols-rounded" style="font-size:18px;vertical-align:text-bottom;margin-right:4px">error</span> <strong>Error:</strong> '+(res.message||'Unknown error. Please try again.'));
     })
     .withFailureHandler(function(err){
       btn.disabled=false;sp.style.display='none';tx.innerHTML='Confirm &amp; Submit';
-      closeConfirm();showErr('❌ <strong>System Error:</strong> '+err.message);
+      closeConfirm();showErr('<span class="material-symbols-rounded" style="font-size:18px;vertical-align:text-bottom;margin-right:4px">error</span> <strong>System Error:</strong> '+err.message);
     })
     .processVLForm(_pendingData);
 }
@@ -7488,7 +7628,7 @@ function setSyncState(state,label){
     if(tip)tip.textContent='Last sync: '+ts;
     setTimeout(function(){if(dot)dot.className='';if(txt)txt.textContent='● Live'},3000);
   }
-  else if(state==='conflict'){dot.className='conflict';txt.textContent=label||'⚠ Conflict!';setTimeout(function(){if(dot)dot.className='';if(txt)txt.textContent='● Live'},6000)}
+  else if(state==='conflict'){dot.className='conflict';txt.textContent='';if(label){txt.textContent=label}else{txt.innerHTML='<span class="material-symbols-rounded" style="font-size:14px;vertical-align:text-bottom">warning</span> Conflict!'}setTimeout(function(){if(dot)dot.className='';if(txt)txt.textContent='● Live'},6000)}
   else if(state==='offline'){dot.className='offline';txt.textContent=label||'Paused'}
   else{dot.className='';txt.textContent='● Live'}
 }
