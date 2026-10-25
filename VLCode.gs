@@ -657,7 +657,7 @@ function processVLForm(data) {
   var creditsSource = /supervisor|team\s*lead/i.test(config.role || "") ? "Workday" : "eStart";
   var creditsAccruals = parseFloat(data.creditsAccruals);
   if (!vlType) return { status: "error", message: "VL Type is required." };
-  if (["Out of Town / Vacation", "Personal", "Family Gathering", "Emergency", "Mental Wellness", "Birthday", "Medical", "Bereavement", "Government / Legal", "Moving House"].indexOf(vlType) < 0) return { status: "error", message: "Invalid VL Type." };
+  if (["Out of Town / Vacation", "Personal", "Family Gathering", "Emergency", "Mental Wellness", "Birthday", "Medical", "Broken Hearted", "Government / Legal", "Moving House"].indexOf(vlType) < 0) return { status: "error", message: "Invalid VL Type." };
   if (reason.length < 3) return { status: "error", message: "Reason for VL is required." };
   if (isNaN(creditsAccruals) || creditsAccruals < 0 || creditsAccruals > 999) return { status: "error", message: "Enter your VL accruals as a number." };
   if (!/^https?:\/\//i.test(creditsUrl)) return { status: "error", message: "A valid VL credits snip link is required." };
