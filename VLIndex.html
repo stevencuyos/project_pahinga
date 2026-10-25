@@ -1946,6 +1946,91 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
 /* day-level removal chips */
 .od-lbl{display:inline-flex;align-items:center;gap:5px;user-select:none}
 .od-lbl.dis{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+
+/* UI Micro-interactions & Polish injected */
+.cell {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.cell:hover {
+  transform: scale(1.01) translateY(-2px);
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-sm);
+}
+.event {
+  background-color: color-mix(in srgb, var(--bg-surface) 20%, currentColor) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent) !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  color: var(--text-main);
+}
+.event:hover {
+  transform: scale(1.02) translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  filter: brightness(1.05);
+}
+body.dark-mode .event:hover {
+  filter: brightness(1.2);
+}
+/* Calendar wrapper animation */
+.cal-wrapper {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+.cal-wrapper.fading {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+
+/* Premium Theme Enhancements */
+body.theme-slate-dark {
+  --bg-page: #0F1219;
+  --bg-surface: #181C26;
+  --bg-sidebar: #13171F;
+}
+body.theme-graphite-dark {
+  --bg-page: #141310;
+  --bg-surface: #1E1D19;
+  --bg-sidebar: #191815;
+}
+body.theme-warm-dark {
+  --bg-page: #171412;
+  --bg-surface: #221D1A;
+  --bg-sidebar: #1D1815;
+}
+
+
+/* Skeleton Polish */
+.sk {
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--text-main) 5%, transparent) 25%,
+    color-mix(in srgb, var(--text-main) 15%, transparent) 50%,
+    color-mix(in srgb, var(--text-main) 5%, transparent) 75%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: shimmerWave 2s infinite linear !important;
+  border-radius: var(--radius-md) !important;
+}
+
+
+/* Mini Progress Bars for Stats */
+.sb-bar-bg {
+  width: 100%;
+  height: 4px;
+  background: color-mix(in srgb, currentColor 15%, transparent);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.sb-bar-fill {
+  height: 100%;
+  background: currentColor;
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
 </style>
 </head>
 <body>
@@ -2094,12 +2179,12 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
     <div class="drawer-hero">
       <button class="drawer-close" onclick="closeDrawer()">×</button>
       <div class="dh-avatar" id="drawerAvatar">?</div>
-      <div class="dh-name" id="drawerName">Loading...</div>
-      <div class="dh-email" id="drawerEmail">Loading...</div>
+      <div class="dh-name" id="drawerName"><div class="sk" style="width:120px;height:24px;border-radius:4px"></div></div>
+      <div class="dh-email" id="drawerEmail"><div class="sk" style="width:160px;height:14px;border-radius:4px"></div></div>
       <div class="quick-stats">
-        <div class="stat-box sb-appr"><div class="sb-num" id="statAppr">0</div><div class="sb-lbl">Approved</div></div>
-        <div class="stat-box sb-pend"><div class="sb-num" id="statPend">0</div><div class="sb-lbl">Pending</div></div>
-        <div class="stat-box sb-den"><div class="sb-num" id="statDen">0</div><div class="sb-lbl">Rejected</div></div>
+        <div class="stat-box sb-appr"><div class="sb-num" id="statAppr">0</div><div class="sb-lbl">Approved</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barAppr" style="width:0%"></div></div></div>
+        <div class="stat-box sb-pend"><div class="sb-num" id="statPend">0</div><div class="sb-lbl">Pending</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barPend" style="width:0%"></div></div></div>
+        <div class="stat-box sb-den"><div class="sb-num" id="statDen">0</div><div class="sb-lbl">Rejected</div><div class="sb-bar-bg"><div class="sb-bar-fill" id="barDen" style="width:0%"></div></div></div>
       </div>
     </div>
     <div class="drawer-tabs" id="drawerSupTabs" style="display:none">
@@ -5904,6 +5989,11 @@ function renderUserRequests(){
   document.getElementById('statAppr').innerText=appr;
   document.getElementById('statPend').innerText=pend;
   document.getElementById('statDen').innerText=den;
+  var tot=appr+pend+den;
+  var ba=document.getElementById('barAppr'),bp=document.getElementById('barPend'),bd=document.getElementById('barDen');
+  if(ba)ba.style.width=(tot?appr/tot*100:0)+'%';
+  if(bp)bp.style.width=(tot?pend/tot*100:0)+'%';
+  if(bd)bd.style.width=(tot?den/tot*100:0)+'%';
   if(!myEvents.length){
     list.innerHTML='<div class="empty-state"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/><path d="M7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z"/></svg><p>No requests found for this month.</p></div>';
     return;
@@ -5951,7 +6041,7 @@ function renderUserRequests(){
 function goToday(){currentDate=new Date();renderCalendar()}
 
 /* QoL #15: slide month title animation */
-function changeMonth(dir){
+function changeMonth(dir){var w=document.querySelector('.cal-wrapper');if(w)w.classList.add('fading');
   var title=document.getElementById('monthDisplay');
   title.classList.add('slide-out');
   setTimeout(function(){
