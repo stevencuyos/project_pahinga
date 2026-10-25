@@ -1958,13 +1958,11 @@ body.theme-graphite-dark,body.theme-slate-dark,body.theme-warm-dark{color-scheme
   border-radius: var(--radius-sm);
 }
 .event {
-  background-color: color-mix(in srgb, var(--bg-surface) 20%, currentColor) !important;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent) !important;
+  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  color: var(--text-main);
 }
 .event:hover {
   transform: scale(1.02) translateY(-1px);
@@ -2003,6 +2001,11 @@ body.theme-warm-dark {
 
 
 /* Skeleton Polish */
+@keyframes shimmerWave {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
 .sk {
   background: linear-gradient(90deg,
     color-mix(in srgb, var(--text-main) 5%, transparent) 25%,
@@ -2139,7 +2142,7 @@ body.theme-warm-dark {
   <main class="calendar-wrapper" id="calendarWrapper">
     <div class="calendar-surface" id="calendarSurface">
       <div class="days-header"><div class="day-name">Sun</div><div class="day-name">Mon</div><div class="day-name">Tue</div><div class="day-name">Wed</div><div class="day-name">Thu</div><div class="day-name">Fri</div><div class="day-name">Sat</div></div>
-      <div class="grid" id="calGrid"></div>
+      <div class="grid cal-wrapper" id="calGrid"></div>
     </div>
   </main>
 
@@ -6050,7 +6053,7 @@ function changeMonth(dir){var w=document.querySelector('.cal-wrapper');if(w)w.cl
     title.classList.remove('slide-in');
     void title.offsetWidth;
     title.classList.add('slide-in');
-    renderCalendar();
+    renderCalendar();if(w)w.classList.remove('fading');
     setTimeout(function(){title.classList.remove('slide-in')},200);
   },130);
 }
