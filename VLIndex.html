@@ -2039,8 +2039,383 @@ body.theme-warm-dark {
   transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+/* ══ SCHEDULE MANAGEMENT UI/UX UPGRADES ══ */
+
+/* 1. Equal-height Split View & Cleaner Card Headers */
+.sch-split {
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+}
+.sch-split > .sch-card {
+  display: flex;
+  flex-direction: column;
+}
+.sch-scroll, .sch-scroll.tall {
+  flex: 1;
+  max-height: calc(100vh - 305px);
+}
+.sch-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-light) 60%, transparent);
+  margin-bottom: 10px;
+}
+
+/* 2. Secondary tonal style for "Plan next 2 weeks" */
+.sch-plan.tonal {
+  background: var(--blue-bg);
+  color: var(--blue-txt);
+  border: 1px solid color-mix(in srgb, var(--blue-main) 30%, transparent);
+  box-shadow: none;
+}
+.sch-plan.tonal:hover {
+  background: color-mix(in srgb, var(--blue-main) 18%, var(--blue-bg));
+}
+
+/* 3. Floating Unsaved Changes Bar (prevents toolbar layout shift) */
+#schPend {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3200;
+  padding: 8px 10px 8px 18px;
+  background: var(--text-main);
+  color: var(--bg-page);
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  border: 1px solid color-mix(in srgb, var(--bg-surface) 20%, transparent);
+  gap: 10px;
+}
+#schPend .sch-link {
+  color: var(--bg-page);
+  opacity: 0.85;
+  text-decoration: none;
+}
+#schPend .sch-link:hover {
+  background: rgba(255,255,255,0.12);
+  opacity: 1;
+}
+
+/* 4. Day Strip: Reduce red-border alert fatigue & add click-to-focus */
+.sch-dcard {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-color: var(--border-light);
+  user-select: none;
+}
+.sch-dcard.bad {
+  border-color: color-mix(in srgb, var(--red-main) 35%, var(--border-light));
+  box-shadow: inset 0 -3px 0 var(--red-main);
+}
+.sch-dcard.tight {
+  border-color: color-mix(in srgb, var(--yellow-main) 40%, var(--border-light));
+  box-shadow: inset 0 -3px 0 var(--yellow-main);
+}
+.sch-dcard.col-focus {
+  outline: 2px solid var(--blue-main);
+  outline-offset: 1px;
+  background: color-mix(in srgb, var(--blue-main) 8%, var(--bg-surface));
+}
+.col-dim {
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+}
+
+/* 5. Recessed OFF cells, corner VL badges & collapsible site headers */
+.sch-c.off {
+  background: transparent;
+  border: 1px dashed color-mix(in srgb, var(--border-light) 80%, transparent);
+  color: color-mix(in srgb, var(--text-muted) 65%, transparent);
+  font-weight: 500;
+  font-size: 11px;
+}
+.sch-vb {
+  top: 2px;
+  right: 2px;
+  left: auto;
+  font-size: 7.5px;
+  padding: 1.5px 4px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1.5px var(--bg-surface);
+}
+.sch-dys.lo {
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+.sch-grp {
+  cursor: pointer;
+  user-select: none;
+}
+.sch-grp:hover td {
+  background: color-mix(in srgb, var(--blue-main) 8%, var(--bg-cell-hover));
+}
+.sch-grp-chev {
+  font-size: 16px !important;
+  vertical-align: middle;
+  margin-right: 4px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+.sch-grp.collapsed .sch-grp-chev {
+  transform: rotate(-90deg);
+}
+
+/* 6. Interactive Shift-Band Legend Pills */
+.sch-leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: 0;
+}
+.sch-leg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font: 600 11px 'Google Sans', sans-serif;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  user-select: none;
+  transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+}
+.sch-leg-pill:hover { transform: translateY(-1px); }
+.sch-leg-pill.bn { background: var(--purple-bg); color: var(--purple-txt); }
+.sch-leg-pill.bm { background: var(--yellow-bg); color: var(--yellow-txt); }
+.sch-leg-pill.bd { background: var(--blue-bg); color: var(--blue-txt); }
+.sch-leg-pill.be { background: var(--pink-bg); color: var(--pink-txt); }
+.sch-leg-pill.on {
+  border-color: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+.sch-c.band-dim {
+  opacity: 0.22;
+}
+
+/* 7. Semantic Theme-Aware Heatmap Cells & Cross-Highlight */
+.sch-h {
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.sch-h.hm-bad {
+  background: var(--red-bg) !important;
+  color: var(--red-txt) !important;
+  border-color: color-mix(in srgb, var(--red-main) 45%, transparent);
+  font-weight: 800;
+}
+.sch-h.hm-warn {
+  background: var(--yellow-bg) !important;
+  color: var(--yellow-txt) !important;
+  border-color: color-mix(in srgb, var(--yellow-main) 35%, transparent);
+}
+.sch-h.hm-ok {
+  background: color-mix(in srgb, var(--green-main) var(--hm-alpha, 22%), var(--bg-surface)) !important;
+  color: var(--green-txt) !important;
+}
+.sch-c.hm-active {
+  outline: 2px solid var(--blue-main);
+  outline-offset: -1px;
+  transform: scale(1.05);
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* ══ SCHEDULE MANAGEMENT UI/UX UPGRADES ══ */
+
+/* 1. Equal-height Split View & Cleaner Card Headers */
+.sch-split {
+  align-items: stretch;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+}
+.sch-split > .sch-card {
+  display: flex;
+  flex-direction: column;
+}
+.sch-scroll, .sch-scroll.tall {
+  flex: 1;
+  max-height: calc(100vh - 305px);
+}
+.sch-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-light) 60%, transparent);
+  margin-bottom: 10px;
+}
+
+/* 2. Secondary tonal style for "Plan next 2 weeks" */
+.sch-plan.tonal {
+  background: var(--blue-bg);
+  color: var(--blue-txt);
+  border: 1px solid color-mix(in srgb, var(--blue-main) 30%, transparent);
+  box-shadow: none;
+}
+.sch-plan.tonal:hover {
+  background: color-mix(in srgb, var(--blue-main) 18%, var(--blue-bg));
+}
+
+/* 3. Floating Unsaved Changes Bar (prevents toolbar layout shift) */
+#schPend {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3200;
+  padding: 8px 10px 8px 18px;
+  background: var(--text-main);
+  color: var(--bg-page);
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+  border: 1px solid color-mix(in srgb, var(--bg-surface) 20%, transparent);
+  gap: 10px;
+}
+#schPend .sch-link {
+  color: var(--bg-page);
+  opacity: 0.85;
+  text-decoration: none;
+}
+#schPend .sch-link:hover {
+  background: rgba(255,255,255,0.12);
+  opacity: 1;
+}
+
+/* 4. Day Strip: Reduce red-border alert fatigue & add click-to-focus */
+.sch-dcard {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-color: var(--border-light);
+  user-select: none;
+}
+.sch-dcard.bad {
+  border-color: color-mix(in srgb, var(--red-main) 35%, var(--border-light));
+  box-shadow: inset 0 -3px 0 var(--red-main);
+}
+.sch-dcard.tight {
+  border-color: color-mix(in srgb, var(--yellow-main) 40%, var(--border-light));
+  box-shadow: inset 0 -3px 0 var(--yellow-main);
+}
+.sch-dcard.col-focus {
+  outline: 2px solid var(--blue-main);
+  outline-offset: 1px;
+  background: color-mix(in srgb, var(--blue-main) 8%, var(--bg-surface));
+}
+.col-dim {
+  opacity: 0.35;
+  transition: opacity 0.2s ease;
+}
+
+/* 5. Recessed OFF cells, corner VL badges & collapsible site headers */
+.sch-c.off {
+  background: transparent;
+  border: 1px dashed color-mix(in srgb, var(--border-light) 80%, transparent);
+  color: color-mix(in srgb, var(--text-muted) 65%, transparent);
+  font-weight: 500;
+  font-size: 11px;
+}
+.sch-vb {
+  top: 2px;
+  right: 2px;
+  left: auto;
+  font-size: 7.5px;
+  padding: 1.5px 4px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1.5px var(--bg-surface);
+}
+.sch-dys.lo {
+  color: var(--text-muted);
+  opacity: 0.65;
+}
+.sch-grp {
+  cursor: pointer;
+  user-select: none;
+}
+.sch-grp:hover td {
+  background: color-mix(in srgb, var(--blue-main) 8%, var(--bg-cell-hover));
+}
+.sch-grp-chev {
+  font-size: 16px !important;
+  vertical-align: middle;
+  margin-right: 4px;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+.sch-grp.collapsed .sch-grp-chev {
+  transform: rotate(-90deg);
+}
+
+/* 6. Interactive Shift-Band Legend Pills */
+.sch-leg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: 0;
+}
+.sch-leg-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font: 600 11px 'Google Sans', sans-serif;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  user-select: none;
+  transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+}
+.sch-leg-pill:hover { transform: translateY(-1px); }
+.sch-leg-pill.bn { background: var(--purple-bg); color: var(--purple-txt); }
+.sch-leg-pill.bm { background: var(--yellow-bg); color: var(--yellow-txt); }
+.sch-leg-pill.bd { background: var(--blue-bg); color: var(--blue-txt); }
+.sch-leg-pill.be { background: var(--pink-bg); color: var(--pink-txt); }
+.sch-leg-pill.on {
+  border-color: currentColor;
+  box-shadow: var(--shadow-sm);
+}
+.sch-c.band-dim {
+  opacity: 0.22;
+}
+
+/* 7. Semantic Theme-Aware Heatmap Cells & Cross-Highlight */
+.sch-h {
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+.sch-h.hm-bad {
+  background: var(--red-bg) !important;
+  color: var(--red-txt) !important;
+  border-color: color-mix(in srgb, var(--red-main) 45%, transparent);
+  font-weight: 800;
+}
+.sch-h.hm-warn {
+  background: var(--yellow-bg) !important;
+  color: var(--yellow-txt) !important;
+  border-color: color-mix(in srgb, var(--yellow-main) 35%, transparent);
+}
+.sch-h.hm-ok {
+  background: color-mix(in srgb, var(--green-main) var(--hm-alpha, 22%), var(--bg-surface)) !important;
+  color: var(--green-txt) !important;
+}
+.sch-c.hm-active {
+  outline: 2px solid var(--blue-main);
+  outline-offset: -1px;
+  transform: scale(1.05);
+  z-index: 3;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
 </style>
-</head>
+<head> 
 <body>
 
 <header>
@@ -2362,7 +2737,7 @@ body.theme-warm-dark {
             <div class="sch-search"><span class="material-symbols-rounded">search</span><input id="schQ" type="text" placeholder="Search support…" oninput="renderSchedules()" autocomplete="off" spellcheck="false"></div>
             <div class="sch-pend" id="schPend" style="display:none"><span class="sch-dot"></span><span id="schPendTxt"></span><button class="sch-link" id="schUndoBtn" onclick="schUndo()" title="Undo (Ctrl+Z)">Undo</button><button class="sch-link" onclick="schDiscard()">Discard</button><button class="sch-btn sch-save" id="schSaveBtn" onclick="schSave()" title="Ctrl+S">Save to sheet</button></div>
           </div>
-          <div class="ac-wg-chips sch-sites"><button type="button" class="sch-plan" onclick="openOptimizer()" title="Fill every hour below the site minimum for this week"><span class="material-symbols-rounded">tune</span>Optimize</button><button type="button" class="sch-plan" onclick="openPlanner()" title="Roll this week's shifts and rest days forward two weeks"><span class="material-symbols-rounded">auto_fix_high</span>Plan next 2 weeks</button><button type="button" class="sch-minbtn" id="schSyncBtn" onclick="schSyncVL()" title="Write every approved VL (today onward) into the schedule"><span class="material-symbols-rounded">event_busy</span>Sync approved VL</button><span class="sch-sep"></span><div class="sch-lay" id="schLay"><button type="button" data-m="grid" onclick="schLayout('grid')"><span class="material-symbols-rounded">table_rows</span>Schedule</button><button type="button" data-m="heat" onclick="schLayout('heat')"><span class="material-symbols-rounded">grid_on</span>Coverage</button><button type="button" data-m="split" onclick="schLayout('split')"><span class="material-symbols-rounded">view_column</span>Split</button></div><span class="sch-sep"></span><button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,'sched')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt">Set minimums</span></button><button class="sch-ib" onclick="schExport()" title="Export week as CSV"><span class="material-symbols-rounded">download</span></button><button class="sch-ib" onclick="schHelp(true)" title="Keyboard shortcuts (?)"><span class="material-symbols-rounded">keyboard</span></button><span class="sch-sep"></span><button class="sch-all" onclick="schSitesAll()">All</button>
+          <div class="ac-wg-chips sch-sites"><button type="button" class="sch-plan" onclick="openOptimizer()" title="Fill every hour below the site minimum for this week"><span class="material-symbols-rounded">tune</span>Optimize</button><button type="button" class="sch-plan tonal" onclick="openPlanner()" title="Roll this week's shifts and rest days forward two weeks"><span class="material-symbols-rounded">auto_fix_high</span>Plan next 2 weeks</button><button type="button" class="sch-minbtn" id="schSyncBtn" onclick="schSyncVL()" title="Write every approved VL (today onward) into the schedule"><span class="material-symbols-rounded">event_busy</span>Sync approved VL</button><span class="sch-sep"></span><div class="sch-lay" id="schLay"><button type="button" data-m="grid" onclick="schLayout('grid')"><span class="material-symbols-rounded">table_rows</span>Schedule</button><button type="button" data-m="heat" onclick="schLayout('heat')"><span class="material-symbols-rounded">grid_on</span>Coverage</button><button type="button" data-m="split" onclick="schLayout('split')"><span class="material-symbols-rounded">view_column</span>Split</button></div><span class="sch-sep"></span><button type="button" class="sch-minbtn" onclick="schOpenMinMenu(event,'sched')" title="Minimum on shift, per site"><span class="material-symbols-rounded">shield</span><span class="sch-mintxt">Set minimums</span></button><button class="sch-ib" onclick="schExport()" title="Export week as CSV"><span class="material-symbols-rounded">download</span></button><button class="sch-ib" onclick="schHelp(true)" title="Keyboard shortcuts (?)"><span class="material-symbols-rounded">keyboard</span></button><span class="sch-sep"></span><button class="sch-all" onclick="schSitesAll()">All</button>
             <label class="ac-wg-chip"><input type="checkbox" value="CEB" class="sch-site-chk" checked onchange="schPickSite(this)">CEB</label>
             <label class="ac-wg-chip"><input type="checkbox" value="VNCC" class="sch-site-chk" checked onchange="schPickSite(this)">VNCC</label>
             <label class="ac-wg-chip"><input type="checkbox" value="UBT" class="sch-site-chk" checked onchange="schPickSite(this)">UBT</label>
@@ -4226,6 +4601,48 @@ function schEdDates(){
   return d.dates.filter(function(y){return y>=wb.start&&y<=wb.end});
 }
 
+window._schCollapsedSites = window._schCollapsedSites || {};
+function schToggleSiteGroup(site) {
+  window._schCollapsedSites[site] = !window._schCollapsedSites[site];
+  renderSchedules();
+}
+function schToggleBand(band) {
+  _sch.bandFilter = (_sch.bandFilter === band) ? '' : band;
+  renderSchedules();
+}
+function schToggleDayCol(ymd) {
+  _sch.focusDay = (_sch.focusDay === ymd) ? '' : ymd;
+  renderSchedules();
+}
+function schHighlightHour(ymd, hour, on) {
+  document.querySelectorAll('#schBody td.sch-c.hm-active').forEach(function(el) {
+    el.classList.remove('hm-active');
+  });
+  if (!on || !_sch.data) return;
+  var sh = ((_sch.data && _sch.data.shiftHours) || 9) * 60;
+  var idx = _sch.data.dates.indexOf(ymd);
+  var prevY = idx > 0 ? _sch.data.dates[idx - 1] : _sch.data.prevDate;
+
+  _sch.data.people.forEach(function(p) {
+    var v = _schVal(p, ymd);
+    if (/^\d\d:\d\d$/.test(v)) {
+      var s = parseInt(v.slice(0, 2), 10) * 60 + parseInt(v.slice(3), 10);
+      if (s < (hour + 1) * 60 && s + sh > hour * 60) {
+        var td = document.querySelector('#schBody td.sch-c[data-r="' + p.row + '"][data-y="' + ymd + '"]');
+        if (td) td.classList.add('hm-active');
+      }
+    }
+    var vp = _schVal(p, prevY);
+    if (/^\d\d:\d\d$/.test(vp)) {
+      var sp = parseInt(vp.slice(0, 2), 10) * 60 + parseInt(vp.slice(3), 10);
+      if (sp + sh - 1440 > hour * 60) {
+        var tdPrev = document.querySelector('#schBody td.sch-c[data-r="' + p.row + '"][data-y="' + prevY + '"]');
+        if (tdPrev) tdPrev.classList.add('hm-active');
+      }
+    }
+  });
+}
+
 function renderSchedules(){
   var d=_sch.data,body=document.getElementById('schBody');
   if(!d||!body)return;
@@ -4241,6 +4658,10 @@ function renderSchedules(){
   var vl=schVlMap(true);
   if(_sch.focus){renderSchFocus(d,body,vl,sc);return}
 
+  if(_sch.focusDay && d.dates.indexOf(_sch.focusDay)<0) _sch.focusDay='';
+  var fDay=_sch.focusDay||'';
+  var bFilt=_sch.bandFilter||'';
+
   var sites=Array.from(document.querySelectorAll('.sch-site-chk:checked')).map(function(c){return c.value});
   var q=((document.getElementById('schQ')||{}).value||'').trim().toLowerCase();
   var ORDER=['CEB','VNCC','UBT','DAV'];
@@ -4249,6 +4670,7 @@ function renderSchedules(){
     return !q||(p.nick||'').toLowerCase().indexOf(q)>=0||p.ldap.indexOf(q)>=0;
   });
   var grouped=sites.length>1;
+  var metaCols=grouped?2:3;
   if(grouped)people.sort(function(a,b){
     var x=ORDER.indexOf(a.site),y=ORDER.indexOf(b.site);
     return (x<0?9:x)-(y<0?9:y);
@@ -4269,7 +4691,7 @@ function renderSchedules(){
     lows.push(Math.min.apply(null,col));peaks.push(Math.max.apply(null,col));
   });
 
-  /* day summary strip */
+  /* day summary strip (clickable to focus a day column) */
   var strip='<div class="sch-days">'+d.dates.map(function(y,i){
     var dt=new Date(y+'T00:00:00'),g=dt.getDay();
     var hd='<div class="sch-dn">'+DN[g]+'<span>'+MO_SHORT[dt.getMonth()]+' '+dt.getDate()+'</span></div>';
@@ -4280,7 +4702,8 @@ function renderSchedules(){
       if(f==='a'){a++;if(isT(_schVal(p,y))&&y>=today)x++}else if(f==='p')pp++;
     });
     var low=lows[i],bad=min>0&&low<min,tight=min>0&&!bad&&low<min+2;
-    return '<div class="sch-dcard'+(y===today?' td':'')+(bad?' bad':(tight?' tight':''))+'">'+hd+'<div class="sch-dv">'+cnt+'</div><div class="sch-dl">scheduled</div><div class="sch-dm">'+
+    var fCls=(fDay===y?' col-focus':(fDay?' col-dim':''));
+    return '<div class="sch-dcard'+(y===today?' td':'')+(bad?' bad':(tight?' tight':''))+fCls+'" onclick="schToggleDayCol(\''+y+'\')" title="Click to focus '+DN[g]+' '+MO_SHORT[dt.getMonth()]+' '+dt.getDate()+'">'+hd+'<div class="sch-dv">'+cnt+'</div><div class="sch-dl">scheduled</div><div class="sch-dm">'+
       '<span class="'+(bad?'lowc':'')+'" title="Lowest hourly headcount">Low '+low+'</span>'+
       (a?'<span class="a" title="Approved VL">'+a+' VL</span>':'')+
       (pp?'<span class="p" title="Pending VL">'+pp+' pend</span>':'')+
@@ -4291,45 +4714,61 @@ function renderSchedules(){
   /* schedule grid */
   var dh=d.dates.map(function(y){
     var dt=new Date(y+'T00:00:00'),g=dt.getDay();
-    return '<th class="'+((g===0||g===6)?'wk ':'')+(y===today?'td':'')+'"'+(d.hasData[y]?'':' style="opacity:.4"')+'>'+DN[g]+'<span>'+MO_SHORT[dt.getMonth()]+' '+dt.getDate()+'</span></th>';
+    var dim=(fDay&&fDay!==y)?' col-dim':'';
+    return '<th class="'+((g===0||g===6)?'wk ':'')+(y===today?'td':'')+dim+'" style="cursor:pointer'+(d.hasData[y]?'':';opacity:.4')+'" onclick="schToggleDayCol(\''+y+'\')">'+DN[g]+'<span>'+MO_SHORT[dt.getMonth()]+' '+dt.getDate()+'</span></th>';
   }).join('');
   var rowHtml=function(p){
     var n=d.dates.filter(function(y){return d.hasData[y]&&isT(_schVal(p,y))}).length;
-    return '<tr><td class="sch-name"><div class="sch-who sch-pick" data-l="'+_escHtml(p.ldap)+'" onclick="schFocus(this.dataset.l)" title="Open 4-week view">'+schAv(p)+'<div class="sch-nm"><b>'+_escHtml(p.nick||p.ldap)+'</b><i>'+_escHtml(p.ldap)+'</i></div></div></td><td class="sch-st"><span class="sch-pill">'+_escHtml(p.site)+'</span></td><td class="sch-dys'+(n>=6?' hi':'')+'" title="Days scheduled this week">'+n+'</td>'+
-      d.dates.map(function(y){return _schCell(p,y,d.hasData[y],vl)}).join('')+'</tr>';
+    var siteCell=grouped?'':'<td class="sch-st"><span class="sch-pill">'+_escHtml(p.site)+'</span></td>';
+    return '<tr><td class="sch-name"><div class="sch-who sch-pick" data-l="'+_escHtml(p.ldap)+'" onclick="schFocus(this.dataset.l)" title="Open 4-week view">'+schAv(p)+'<div class="sch-nm"><b>'+_escHtml(p.nick||p.ldap)+'</b><i>'+_escHtml(p.ldap)+'</i></div></div></td>'+siteCell+'<td class="sch-dys'+(n>=6?' hi':(n>0&&n<5?' lo':''))+'" title="Days scheduled this week">'+n+'</td>'+
+      d.dates.map(function(y){
+        var cellHtml=_schCell(p,y,d.hasData[y],vl);
+        var extraCls='';
+        if(fDay&&fDay!==y)extraCls+=' col-dim';
+        if(bFilt){
+          var val=_schVal(p,y);
+          if(!isT(val)||schBand(val)!==bFilt)extraCls+=' band-dim';
+        }
+        return extraCls?cellHtml.replace('class="sch-c','class="sch-c'+extraCls):cellHtml;
+      }).join('')+'</tr>';
   };
   var grpRow=function(s,list){
-    return '<tr class="sch-grp"><td colspan="3"><span class="sch-pill">'+_escHtml(s)+'</span><span class="sch-gn">'+list.length+' supports</span></td>'+d.dates.map(function(y){
+    var col=!!window._schCollapsedSites[s];
+    return '<tr class="sch-grp'+(col?' collapsed':'')+'" onclick="schToggleSiteGroup(\''+_escHtml(s)+'\')" title="Click to '+(col?'expand':'collapse')+' '+_escHtml(s)+'"><td colspan="'+metaCols+'"><span class="material-symbols-rounded sch-grp-chev">expand_more</span><span class="sch-pill">'+_escHtml(s)+'</span><span class="sch-gn">'+list.length+' supports</span></td>'+d.dates.map(function(y){
       if(!d.hasData[y])return '<td>–</td>';
       var c=list.filter(function(p){return isT(_schVal(p,y))}).length;
       var v=list.filter(function(p){return lk(p,y)==='a'}).length;
-      return '<td class="sch-gc">'+c+(v?'<em title="'+v+' approved VL">'+v+' VL</em>':'')+'</td>';
+      return '<td class="sch-gc'+(fDay&&fDay!==y?' col-dim':'')+'">'+c+(v?'<em title="'+v+' approved VL">'+v+' VL</em>':'')+'</td>';
     }).join('')+'</tr>';
   };
   var rows='';
   if(!people.length){
-    rows='<tr><td colspan="'+(3+d.dates.length)+'" style="padding:30px;text-align:center;color:var(--text-muted)">No supports match.</td></tr>';
+    rows='<tr><td colspan="'+(metaCols+d.dates.length)+'" style="padding:30px;text-align:center;color:var(--text-muted)">No supports match.</td></tr>';
   }else if(grouped){
     ORDER.forEach(function(s){
       var list=people.filter(function(p){return p.site===s});
-      if(list.length)rows+=grpRow(s,list)+list.map(rowHtml).join('');
+      if(list.length)rows+=grpRow(s,list)+(window._schCollapsedSites[s]?'':list.map(rowHtml).join(''));
     });
     var rest=people.filter(function(p){return ORDER.indexOf(p.site)<0});
-    if(rest.length)rows+=grpRow('Other',rest)+rest.map(rowHtml).join('');
+    if(rest.length)rows+=grpRow('Other',rest)+(window._schCollapsedSites['Other']?'':rest.map(rowHtml).join(''));
   }else rows=people.map(rowHtml).join('');
 
-  var tot='<tr class="sch-tot"><td colspan="3" class="sch-lbl">Scheduled</td>'+d.dates.map(function(y){
-    return d.hasData[y]?'<td>'+people.filter(function(p){return isT(_schVal(p,y))}).length+'</td>':'<td>–</td>';
+  var tot='<tr class="sch-tot"><td colspan="'+metaCols+'" class="sch-lbl">Scheduled</td>'+d.dates.map(function(y){
+    return d.hasData[y]?'<td class="'+(fDay&&fDay!==y?'col-dim':'')+'">'+people.filter(function(p){return isT(_schVal(p,y))}).length+'</td>':'<td>–</td>';
   }).join('')+'</tr>';
-  var vlr='<tr class="sch-tot"><td colspan="3" class="sch-lbl">VL filed</td>'+d.dates.map(function(y){
+  var vlr='<tr class="sch-tot"><td colspan="'+metaCols+'" class="sch-lbl">VL filed</td>'+d.dates.map(function(y){
     if(!d.hasData[y])return '<td>–</td>';
     var a=0,pp=0;
     people.forEach(function(p){var f=lk(p,y);if(f==='a')a++;else if(f==='p')pp++});
-    return '<td>'+((a||pp)?a+(pp?'<small style="font-weight:500;color:var(--text-muted)"> +'+pp+'</small>':''):'–')+'</td>';
+    return '<td class="'+(fDay&&fDay!==y?'col-dim':'')+'">'+((a||pp)?a+(pp?'<small style="font-weight:500;color:var(--text-muted)"> +'+pp+'</small>':''):'–')+'</td>';
   }).join('')+'</tr>';
-  var legend='<span class="sch-leg"><i class="sch-vb a">VL</i>approved<i class="sch-vb p">VL</i>pending<i class="sch-vb x">!</i>VL but scheduled<span class="sch-bd bn"></span>Night<span class="sch-bd bm"></span>Morning<span class="sch-bd bd"></span>Day<span class="sch-bd be"></span>Evening</span>';
-  var gridCard='<div class="sch-card"><div class="sch-title">Schedule <span class="sch-sub">'+ws+' · '+people.length+' supports · click or use arrow keys to edit · click a name for their 4-week view · ? for shortcuts</span>'+legend+'</div>'+
-    '<div class="sch-scroll tall"><table class="sch-table"><thead><tr><th style="text-align:left">Support</th><th>Site</th><th>Days</th>'+dh+'</tr></thead><tbody>'+rows+'</tbody><tfoot>'+tot+vlr+'</tfoot></table></div></div>';
+  var legend='<span class="sch-leg"><i class="sch-vb a">VL</i>approved<i class="sch-vb p">VL</i>pending<i class="sch-vb x">!</i>conflict'+
+    '<span class="sch-leg-pill bn'+(bFilt==='bn'?' on':'')+'" onclick="schToggleBand(\'bn\')" title="Filter Night shifts">Night</span>'+
+    '<span class="sch-leg-pill bm'+(bFilt==='bm'?' on':'')+'" onclick="schToggleBand(\'bm\')" title="Filter Morning shifts">Morning</span>'+
+    '<span class="sch-leg-pill bd'+(bFilt==='bd'?' on':'')+'" onclick="schToggleBand(\'bd\')" title="Filter Day shifts">Day</span>'+
+    '<span class="sch-leg-pill be'+(bFilt==='be'?' on':'')+'" onclick="schToggleBand(\'be\')" title="Filter Evening shifts">Evening</span></span>';
+  var gridCard='<div class="sch-card"><div class="sch-title"><div>Schedule <span class="sch-sub">'+ws+' · '+people.length+' supports · click a name for 4-week view · ? for shortcuts</span></div>'+legend+'</div>'+
+    '<div class="sch-scroll tall"><table class="sch-table"><thead><tr><th style="text-align:left">Support</th>'+(grouped?'':'<th>Site</th>')+'<th>Days</th>'+dh+'</tr></thead><tbody>'+rows+'</tbody><tfoot>'+tot+vlr+'</tfoot></table></div></div>';
 
   /* heatmap */
   var hrows=heat.map(function(r,h){
@@ -4339,17 +4778,24 @@ function renderSchedules(){
       if(!d.hasData[y])return '<td class="sch-h nd">–</td>';
       var dt=new Date(y+'T00:00:00');
       var tip=lbl+' · '+DN[dt.getDay()]+' '+MO_SHORT[dt.getMonth()]+' '+dt.getDate()+' — '+c+' on shift'+(c?': '+H.names[h][i].join(', '):'');
-      return '<td class="sch-h'+(min>0&&c<min?' lowc':'')+'" style="background:hsla('+Math.round(max>0?c/max*120:0)+',65%,62%,.9)" title="'+_escHtml(tip)+'">'+c+'</td>';
+      var stateCls='';
+      var alpha=max>0?Math.round(14+(c/max)*34):18;
+      if(min>0&&c<min)stateCls=' hm-bad';
+      else if(min>0&&c<=min+1)stateCls=' hm-warn';
+      else stateCls=' hm-ok';
+      if(fDay&&fDay!==y)stateCls+=' col-dim';
+      return '<td class="sch-h'+stateCls+'" style="--hm-alpha:'+alpha+'%" onmouseenter="schHighlightHour(\''+y+'\','+h+',true)" onmouseleave="schHighlightHour(\''+y+'\','+h+',false)" title="'+_escHtml(tip)+'">'+c+'</td>';
     }).join('')+'</tr>';
   }).join('');
   var pk='<tr class="sch-tot"><td class="sch-lbl">Peak</td>',lw='<tr class="sch-tot"><td class="sch-lbl">Low</td>';
   d.dates.forEach(function(y,i){
     if(!d.hasData[y]){pk+='<td>–</td>';lw+='<td>–</td>';return}
-    pk+='<td>'+peaks[i]+'</td>';
-    lw+='<td'+(min>0&&lows[i]<min?' class="lowc"':'')+'>'+lows[i]+'</td>';
+    var dim=(fDay&&fDay!==y)?' col-dim':'';
+    pk+='<td class="'+dim+'">'+peaks[i]+'</td>';
+    lw+='<td class="'+(min>0&&lows[i]<min?'lowc':'')+dim+'">'+lows[i]+'</td>';
   });
   pk+='</tr>';lw+='</tr>';
-  var heatCard='<div class="sch-card"><div class="sch-title">Coverage heatmap <span class="sch-sub">'+ws+' · '+(d.shiftHours||9)+'-hour shifts'+(min>0?' · red outline = under '+min:'')+'</span></div><div class="sch-scroll"><table class="sch-table"><thead><tr><th></th>'+dh+'</tr></thead><tbody>'+hrows+'</tbody><tfoot>'+pk+lw+'</tfoot></table></div></div>';
+  var heatCard='<div class="sch-card"><div class="sch-title">Coverage heatmap <span class="sch-sub">'+ws+' · '+(d.shiftHours||9)+'-hour shifts · hover an hour to highlight agents'+(min>0?' · red = under '+min:'')+'</span></div><div class="sch-scroll"><table class="sch-table"><thead><tr><th></th>'+dh+'</tr></thead><tbody>'+hrows+'</tbody><tfoot>'+pk+lw+'</tfoot></table></div></div>';
 
   var main=_sch.layout==='heat'?heatCard:(_sch.layout==='split'?'<div class="sch-split">'+gridCard+heatCard+'</div>':gridCard);
   body.innerHTML=strip+main;
